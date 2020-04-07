@@ -16,19 +16,25 @@ class Mouse():
 		if event==cv2.EVENT_LBUTTONDOWN:
 			self.x_hold=x
 			self.y_hold=y
-			self.hold=True
+			#self.hold=True
 			#cv2.circle(img,(x,y),50,(0,0,255),-1)
-		elif event==cv2.EVENT_MOUSEMOVE and self.x_hold!=0 and self.y_hold!=0:
+		elif event==cv2.EVENT_MOUSEMOVE and self.x_hold!=0 and self.y_hold!=0 and self.hold==False:
 			#print(self.x_hold,self.y_hold,x,y)
 			if flags==cv2.EVENT_FLAG_LBUTTON:
 				if x-self.x_hold>10:
 					print("→")
+					self.hold=True
 				elif x-self.x_hold<-10:
 					print("←")
+					self.hold=True
 				elif y-self.y_hold<-10:
 					print("↑")
+					self.hold=True
 				elif y-self.y_hold>10:
 					print("↓")
+					self.hold=True
+		elif event==cv2.EVENT_LBUTTONUP:
+			self.hold=False
 
 img=cv2.imread("e6af7755-s.jpg",1)
 cv2.namedWindow("img",cv2.WINDOW_NORMAL)
