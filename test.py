@@ -1,7 +1,7 @@
 # coding:UTF=8
 
 # from PIL import Image
-# import numpy
+import numpy
 import pdb,sys,time,cv2
 #import tkinter
 #import pyautogui
@@ -41,10 +41,18 @@ cv2.namedWindow("img",cv2.WINDOW_NORMAL)
 
 mouse_t=Mouse()
 
+canvas_height=img.shape[0]+100
+canvas_width=img.shape[1]+100
+print(canvas_height,canvas_width)
+white_canvas_array=numpy.zeros((canvas_height,canvas_width,3),numpy.uint8)
+for i in range(0,img.shape[0],1):
+	for j in range(0,img.shape[1],1):
+		white_canvas_array[i+50][j+50]=img[i][j]
+
 cv2.setMouseCallback("img",mouse_t.mouse_event)
 
 while(True):
-	cv2.imshow("img",img)
+	cv2.imshow("img",white_canvas_array)
 	if cv2.waitKey(1) & 0xff==ord("q"):
 		break
 
