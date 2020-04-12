@@ -12,7 +12,7 @@ class Mouse():
 		self.x_hold=0
 		self.y_hold=0
 		self.hold=False
-		self.buf=numpy.zeros((20,20,3),numpy.uint8)
+		self.buf=numpy.zeros((21,20,3),numpy.uint8)
 	def mouse_event(self,event,x,y,flags,param):
 		if event==cv2.EVENT_LBUTTONDOWN:
 			self.x_hold=x
@@ -21,18 +21,27 @@ class Mouse():
 			if flags==cv2.EVENT_FLAG_LBUTTON:
 				if x-self.x_hold>10:
 					print("→")
-					for i in range(1,20,1):
+					for i in range(1,21,1):
 						for j in range(1,20,1):
-							self.buf[i][j]=white_canvas_array[math.floor((y-1)/20)*20+i][canvas_width-20+j]
-					for i in range(1,20,1,):
+							self.buf[i-1][j]=white_canvas_array[math.floor((y-1)/20)*20+i-1][canvas_width-20+j]
+					for i in range(1,21,1,):
 						for j in range(canvas_width,20,-1):
-							white_canvas_array[math.floor((y-1)/20)*20+i][j-1]=white_canvas_array[math.floor((y-1)/20)*20+i][j-20]
-					for i in range(1,20,1):
+							white_canvas_array[math.floor((y-1)/20)*20+i-1][j-1]=white_canvas_array[math.floor((y-1)/20)*20+i-1][j-20]
+					for i in range(1,21,1):
 						for j in range(1,20,1):
-							white_canvas_array[math.floor((y-1)/20)*20+i][j]=self.buf[i][j]
+							white_canvas_array[math.floor((y-1)/20)*20+i-1][j]=self.buf[i-1][j]
 					self.hold=True
 				elif x-self.x_hold<-10:
 					print("←")
+					for i in range(1,21,1):
+						for j in range(1,20,1):
+							self.buf[i-1][j]=white_canvas_array[math.floor((y-1)/20)*20+i-1][j]
+					for i in range(1,21,1,):
+						for j in range(20,canvas_width,1):
+							white_canvas_array[math.floor((y-1)/20)*20+i-1][j-20]=white_canvas_array[math.floor((y-1)/20)*20+i-1][j-1]
+					for i in range(1,21,1):
+						for j in range(1,20,1):
+							white_canvas_array[math.floor((y-1)/20)*20+i-1][canvas_width-20+j]=self.buf[i-1][j]
 					self.hold=True
 				elif y-self.y_hold<-10:
 					print("↑")
