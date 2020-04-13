@@ -1,6 +1,7 @@
-import sys,tkinter
+import sys,tkinter,pdb
 from tkinter import messagebox
 from tkinter import filedialog
+import puz
 
 root=tkinter.Tk()
 root.title("karakuri")
@@ -12,7 +13,10 @@ def select_pic(event):
 	#askopenfilename 一つのファイルを選択する。
 	filename=filedialog.askopenfilename(filetypes=file_type,initialdir=directory) 
 	messagebox.showinfo('FILE NAME is ...',filename)
+	root.destroy()
 
+	start=puz.Game()
+	start.maingame(filename)
 
 button=tkinter.Button(text="画像を選ぶ")
 button.bind("<Button-1>",select_pic)
