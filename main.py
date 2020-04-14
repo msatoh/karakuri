@@ -1,5 +1,4 @@
-import sys,tkinter,pdb
-from tkinter import messagebox
+import sys,tkinter,pdb,os
 from tkinter import filedialog
 import puz
 
@@ -9,10 +8,12 @@ root.geometry("600x400")
 
 def select_pic(event):
 	file_type=[("画像","*.jpg")]
-	directory="/home/"
+	if os.name=="posix":
+		directory="/home/"
+	elif os.name=="nt":
+		directory="c:\\"
 	#askopenfilename 一つのファイルを選択する。
 	filename=filedialog.askopenfilename(filetypes=file_type,initialdir=directory) 
-	messagebox.showinfo('FILE NAME is ...',filename)
 	root.destroy()
 
 	start=puz.Game()
