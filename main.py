@@ -16,8 +16,8 @@ def select_pic(event):
 	filename=filedialog.askopenfilename(filetypes=file_type,initialdir=directory) 
 	root.destroy()
 
-	start=puz.Game()
-	start.maingame(filename)
+	start=puz.Game(filename)
+	start.maingame()
 
 button=tkinter.Button(text="画像を選ぶ")
 button.bind("<Button-1>",select_pic)
