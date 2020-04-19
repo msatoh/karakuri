@@ -1,7 +1,7 @@
 # coding:UTF=8
 
 # from PIL import Image
-import numpy,math
+import numpy,math,random
 import pdb,sys,time,cv2
 #import tkinter
 #import pyautogui
@@ -34,6 +34,10 @@ class Game():
 		cv2.destroyAllWindows()
 
 class Mouse(Game):
+	right=1
+	left=2
+	up=3
+	down=4
 	def __init__(self,canvas_height,canvas_width,white_canvas_array):
 		self.x_hold=0
 		self.y_hold=0
@@ -43,8 +47,12 @@ class Mouse(Game):
 		self.canvas_width=canvas_width
 		self.white_canvas_array=white_canvas_array
 
+		#シャッフル
+		for i in range(0,3,1):
+			self.slide_pic(random.randint(1,4),random.randint(100,self.canvas_width-100),random.randint(100,self.canvas_height-100))
+
 	def slide_pic(self,direction,x,y):
-		if direction=="right":
+		if direction==self.right:
 			for i in range(1,21,1):
 				for j in range(1,20,1):
 					self.buf[i-1][j]=self.white_canvas_array[math.floor((y-1)/20)*20+i-1][self.canvas_width-20+j]
@@ -54,7 +62,7 @@ class Mouse(Game):
 			for i in range(1,21,1):
 				for j in range(1,20,1):
 					self.white_canvas_array[math.floor((y-1)/20)*20+i-1][j]=self.buf[i-1][j]
-		elif direction=="left":
+		elif direction==self.left:
 			for i in range(1,21,1):
 				for j in range(1,20,1):
 					self.buf[i-1][j]=self.white_canvas_array[math.floor((y-1)/20)*20+i-1][j]
@@ -64,7 +72,7 @@ class Mouse(Game):
 			for i in range(1,21,1):
 				for j in range(1,20,1):
 					self.white_canvas_array[math.floor((y-1)/20)*20+i-1][self.canvas_width-20+j]=self.buf[i-1][j]
-		elif direction=="up":
+		elif direction==self.up:
 			for i in range(1,20,1):
 				for j in range(0,20,1):
 					self.buf[i][j]=self.white_canvas_array[i][math.floor((x-1)/20)*20+j-1]
@@ -74,7 +82,7 @@ class Mouse(Game):
 			for i in range(1,20,1):
 				for j in range(0,20,1):
 					self.white_canvas_array[self.canvas_height-20+i][math.floor((x-1)/20)*20+j-1]=self.buf[i][j]
-		elif direction=="down":
+		elif direction==self.down:
 			for i in range(1,20,1):
 				for j in range(0,20,1):
 					self.buf[i][j]=self.white_canvas_array[self.canvas_height-20+i][math.floor((x-1)/20)*20+j-1]
@@ -93,12 +101,12 @@ class Mouse(Game):
 		elif event==cv2.EVENT_MOUSEMOVE and self.x_hold!=0 and self.y_hold!=0 and self.hold==False: #マウスの左ボタンが押されたまま動いた時
 			if flags==cv2.EVENT_FLAG_LBUTTON:
 				if x-self.x_hold>10:
-					self.slide_pic("right",x,y)
+					self.slide_pic(self.right,x,y)
 				elif x-self.x_hold<-10:
-					self.slide_pic("left",x,y)
+					self.slide_pic(self.left,x,y)
 				elif y-self.y_hold<-10:
-					self.slide_pic("up",x,y)
+					self.slide_pic(self.up,x,y)
 				elif y-self.y_hold>10:
-					self.slide_pic("down",x,y)
+					self.slide_pic(self.down,x,y)
 		elif event==cv2.EVENT_LBUTTONUP:
 			self.hold=False
