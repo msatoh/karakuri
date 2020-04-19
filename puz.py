@@ -36,11 +36,7 @@ class Game():
 				break
 			elif (self.initial_canvas==self.white_canvas).all():
 				messagebox.showinfo("正解","おみごと")
-				root.destroy()
 				break
-			else:
-				print("unbko")
-
 
 		cv2.destroyAllWindows()
 
@@ -56,7 +52,6 @@ class Mouse(Game):
 		self.buf=numpy.zeros((21,20,3),numpy.uint8)
 		self.canvas_height=canvas_height
 		self.canvas_width=canvas_width
-		self.white_canvas=white_canvas
 
 		#シャッフル
 		for i in range(0,3,1):
@@ -66,43 +61,43 @@ class Mouse(Game):
 		if direction==self.right:
 			for i in range(1,21,1):
 				for j in range(1,20,1):
-					self.buf[i-1][j]=self.white_canvas[math.floor((y-1)/20)*20+i-1][self.canvas_width-20+j]
+					self.buf[i-1][j]=white_canvas[math.floor((y-1)/20)*20+i-1][self.canvas_width-20+j]
 			for i in range(1,21,1,):
 				for j in range(self.canvas_width,20,-1):
-					self.white_canvas[math.floor((y-1)/20)*20+i-1][j-1]=self.white_canvas[math.floor((y-1)/20)*20+i-1][j-20]
+					white_canvas[math.floor((y-1)/20)*20+i-1][j-1]=white_canvas[math.floor((y-1)/20)*20+i-1][j-20]
 			for i in range(1,21,1):
 				for j in range(1,20,1):
-					self.white_canvas[math.floor((y-1)/20)*20+i-1][j]=self.buf[i-1][j]
+					white_canvas[math.floor((y-1)/20)*20+i-1][j]=self.buf[i-1][j]
 		elif direction==self.left:
 			for i in range(1,21,1):
 				for j in range(1,20,1):
 					self.buf[i-1][j]=self.white_canvas[math.floor((y-1)/20)*20+i-1][j]
 			for i in range(1,21,1,):
 				for j in range(20,self.canvas_width,1):
-					self.white_canvas[math.floor((y-1)/20)*20+i-1][j-20]=self.white_canvas[math.floor((y-1)/20)*20+i-1][j-1]
+					white_canvas[math.floor((y-1)/20)*20+i-1][j-20]=white_canvas[math.floor((y-1)/20)*20+i-1][j-1]
 			for i in range(1,21,1):
 				for j in range(1,20,1):
-					self.white_canvas[math.floor((y-1)/20)*20+i-1][self.canvas_width-20+j]=self.buf[i-1][j]
+					white_canvas[math.floor((y-1)/20)*20+i-1][self.canvas_width-20+j]=self.buf[i-1][j]
 		elif direction==self.up:
 			for i in range(1,20,1):
 				for j in range(0,20,1):
 					self.buf[i][j]=self.white_canvas[i][math.floor((x-1)/20)*20+j-1]
 			for i in range(0,self.canvas_height-20,1,):
 				for j in range(0,20,1):
-					self.white_canvas[i][math.floor((x-1)/20)*20+j-1]=self.white_canvas[i+20][math.floor((x-1)/20)*20+j-1]
+					white_canvas[i][math.floor((x-1)/20)*20+j-1]=white_canvas[i+20][math.floor((x-1)/20)*20+j-1]
 			for i in range(1,20,1):
 				for j in range(0,20,1):
-					self.white_canvas[self.canvas_height-20+i][math.floor((x-1)/20)*20+j-1]=self.buf[i][j]
+					white_canvas[self.canvas_height-20+i][math.floor((x-1)/20)*20+j-1]=self.buf[i][j]
 		elif direction==self.down:
 			for i in range(1,20,1):
 				for j in range(0,20,1):
 					self.buf[i][j]=self.white_canvas[self.canvas_height-20+i][math.floor((x-1)/20)*20+j-1]
 			for i in range(self.canvas_height-20,1,-1,):
 				for j in range(0,20,1):
-					self.white_canvas[i+19][math.floor((x-1)/20)*20+j-1]=self.white_canvas[i-1][math.floor((x-1)/20)*20+j-1]
+					white_canvas[i+19][math.floor((x-1)/20)*20+j-1]=white_canvas[i-1][math.floor((x-1)/20)*20+j-1]
 			for i in range(1,20,1):
 				for j in range(0,20,1):
-					self.white_canvas[i][math.floor((x-1)/20)*20+j-1]=self.buf[i][j]			
+					white_canvas[i][math.floor((x-1)/20)*20+j-1]=self.buf[i][j]			
 		self.hold=True		
 
 	def mouse_event(self,event,x,y,flags,param):
