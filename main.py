@@ -1,6 +1,6 @@
 import sys,tkinter,pdb,os
 from tkinter import filedialog
-import puz
+import puzl
 
 root=tkinter.Tk()
 root.title("karakuri")
