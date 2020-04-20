@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sys,tkinter,pdb,os
 from tkinter import filedialog
 import puz
@@ -7,7 +8,7 @@ root.title("karakuri")
 root.geometry("600x400")
 
 def select_pic(event):
-	file_type=[("画像","*.jpg")]
+	file_type=[(u"画像","*.jpg")]
 	if os.name=="posix":
 		directory="/home/"
 	elif os.name=="nt":
