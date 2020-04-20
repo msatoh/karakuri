@@ -2,7 +2,7 @@
 
 # from PIL import Image
 import numpy,math,random
-import pdb,sys,time,cv2
+import pdb,sys,time,cv2,tkinter
 from tkinter import messagebox
 #import pyautogui
 
@@ -34,8 +34,11 @@ class Game():
 			cv2.imshow("img",self.white_canvas)
 			if cv2.waitKey(1) & 0xff==ord("q"):
 				break
-			elif (self.initial_canvas==self.white_canvas).all():
-					messagebox.showinfo("正解","おみごと")
+			elif (self.initial_canvas==self.white_canvas).all():#元の絵に戻った時
+				root = tkinter.Tk()
+				root.withdraw()
+				if messagebox.showinfo("正解","おみごと")=="ok":
+					root.destroy()
 					break
 
 		cv2.destroyAllWindows()
