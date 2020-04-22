@@ -1,6 +1,5 @@
 # coding:UTF=8
 
-# from PIL import Image
 import numpy,math,random
 import pdb,sys,time,cv2,tkinter
 from tkinter import messagebox
@@ -13,7 +12,6 @@ class Game():
 
 		self.canvas_height=img.shape[0]+200
 		self.canvas_width=img.shape[1]+200
-		#print(self.canvas_height,self.canvas_width)
 
 		self.white_canvas=numpy.full((self.canvas_height,self.canvas_width,3),255,numpy.uint8)
 		self.initial_canvas=numpy.full((self.canvas_height,self.canvas_width,3),255,numpy.uint8)
@@ -44,10 +42,10 @@ class Game():
 		cv2.destroyAllWindows()
 
 class Mouse(Game):
-	right=1
-	left=2
-	up=3
-	down=4
+	RIGHT = 1
+	LEFT  = 2
+	UP    = 3
+	DOWN  = 4
 	def __init__(self,canvas_height,canvas_width,white_canvas):
 		self.x_hold=0
 		self.y_hold=0
@@ -62,7 +60,7 @@ class Mouse(Game):
 			self.slide_pic(random.randint(1,4),random.randint(100,self.canvas_width-100),random.randint(100,self.canvas_height-100))
 
 	def slide_pic(self,direction,x,y):
-		if direction==self.right:
+		if direction==self.RIGHT:
 			for i in range(1,21,1):
 				for j in range(1,20,1):
 					self.buf[i-1][j]=self.white_canvas[math.floor((y-1)/20)*20+i-1][self.canvas_width-20+j]
@@ -72,7 +70,7 @@ class Mouse(Game):
 			for i in range(1,21,1):
 				for j in range(1,20,1):
 					self.white_canvas[math.floor((y-1)/20)*20+i-1][j]=self.buf[i-1][j]
-		elif direction==self.left:
+		elif direction==self.LEFT:
 			for i in range(1,21,1):
 				for j in range(1,20,1):
 					self.buf[i-1][j]=self.white_canvas[math.floor((y-1)/20)*20+i-1][j]
@@ -82,7 +80,7 @@ class Mouse(Game):
 			for i in range(1,21,1):
 				for j in range(1,20,1):
 					self.white_canvas[math.floor((y-1)/20)*20+i-1][self.canvas_width-20+j]=self.buf[i-1][j]
-		elif direction==self.up:
+		elif direction==self.UP:
 			for i in range(1,20,1):
 				for j in range(0,20,1):
 					self.buf[i][j]=self.white_canvas[i][math.floor((x-1)/20)*20+j-1]
@@ -92,7 +90,7 @@ class Mouse(Game):
 			for i in range(1,20,1):
 				for j in range(0,20,1):
 					self.white_canvas[self.canvas_height-20+i][math.floor((x-1)/20)*20+j-1]=self.buf[i][j]
-		elif direction==self.down:
+		elif direction==self.DOWN:
 			for i in range(1,20,1):
 				for j in range(0,20,1):
 					self.buf[i][j]=self.white_canvas[self.canvas_height-20+i][math.floor((x-1)/20)*20+j-1]
@@ -111,12 +109,12 @@ class Mouse(Game):
 		elif event==cv2.EVENT_MOUSEMOVE and self.x_hold!=0 and self.y_hold!=0 and self.hold==False: #マウスの左ボタンが押されたまま動いた時
 			if flags==cv2.EVENT_FLAG_LBUTTON:
 				if x-self.x_hold>10:
-					self.slide_pic(self.right,x,y)
+					self.slide_pic(self.RIGHT,x,y)
 				elif x-self.x_hold<-10:
-					self.slide_pic(self.left,x,y)
+					self.slide_pic(self.LEFT,x,y)
 				elif y-self.y_hold<-10:
-					self.slide_pic(self.up,x,y)
+					self.slide_pic(self.UP,x,y)
 				elif y-self.y_hold>10:
-					self.slide_pic(self.down,x,y)
+					self.slide_pic(self.DOWN,x,y)
 		elif event==cv2.EVENT_LBUTTONUP:
 			self.hold=False
