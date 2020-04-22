@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sys,tkinter,pdb,os
 from tkinter import filedialog
 import puzl
@@ -7,7 +8,7 @@ root.title("karakuri")
 root.geometry("600x400")
 
 def select_pic(event):
-	file_type=[("画像","*.jpg")]
+	file_type=[(u"画像","*.jpg")]
 	if os.name=="posix":
 		directory="/home/"
 	elif os.name=="nt":
@@ -16,8 +17,8 @@ def select_pic(event):
 	filename=filedialog.askopenfilename(filetypes=file_type,initialdir=directory) 
 	root.destroy()
 
-	start=puz.Game()
-	start.maingame(filename)
+	start=puz.Game(filename)
+	start.maingame()
 
 button=tkinter.Button(text="画像を選ぶ")
 button.bind("<Button-1>",select_pic)
