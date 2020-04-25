@@ -24,32 +24,35 @@ class Game():
 				self.white_canvas[i+100][j+100]=img[i][j]
 				self.initial_canvas[i+100][j+100]=img[i][j]
 
-	def maingame(self):
-		# Tkクラス生成
-		root = tkinter.Tk()
-		# 画面サイズ
-		root.geometry('300x200')
-		# 画面タイトル
-		root.title('レベル選択')
+	def maingame(self,mode):
 
-		self.lvl=0
 
-		# ラベル
-		lbl = tkinter.Label(text='レベル（最小移動回数）を入力してください：')
-		lbl.place(x=30, y=50)
+		self.lvl=1
+		if mode=="exercise":
+			# Tkクラス生成
+			root = tkinter.Tk()
+			# 画面サイズ
+			root.geometry('300x200')
+			# 画面タイトル
+			root.title('レベル選択')
+			# ラベル
+			lbl = tkinter.Label(text='レベル（最小移動回数）を入力してください：')
+			lbl.place(x=30, y=50)
 
-		# テキストボックス
-		txt = tkinter.Entry(width=15)
-		txt.place(x=50, y=70)
+			# テキストボックス
+			txt = tkinter.Entry(width=15)
+			txt.place(x=50, y=70)
 
-		def d_lvl():
-			self.lvl=int(txt.get())
-			root.destroy()
-		#box
-		btn=tkinter.Button(text="決定",command=d_lvl)
-		btn.place(x=180, y=70)
+			def d_lvl():
+				self.lvl=int(txt.get())
+				root.destroy()
+			#box
+			btn=tkinter.Button(text="決定",command=d_lvl)
+			btn.place(x=180, y=70)
 
-		root.mainloop()
+			root.mainloop()
+
+
 
 		mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,self.lvl)
 		cv2.setMouseCallback("img",mouse_t.mouse_event)

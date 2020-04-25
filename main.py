@@ -26,9 +26,9 @@ def helper(event):
 
 def select_pic(event):
 	if event.widget==b_endl_mode:
-		print("endless")
+		mode="endless"
 	elif event.widget==b_exer_mode:
-		print("exercise")
+		mode="exercise"
 	file_type=[("画像ファイル","*.jpg"),("画像ファイル","*.png"),("画像ファイル","*.bmp")]
 	if os.name=="posix":
 		directory="/home/"
@@ -39,7 +39,7 @@ def select_pic(event):
 	if not(len(filename)==0): 
 		root.destroy()
 		start=puzl.Game(filename)
-		start.maingame()
+		start.maingame(mode)
 
 ##main##
 
