@@ -6,7 +6,9 @@ from tkinter import messagebox
 #import pyautogui
 
 class Game():
+
 	def __init__(self,file_name):
+
 		img=cv2.imread(file_name,1)
 		cv2.namedWindow("img",cv2.WINDOW_NORMAL)
 
@@ -22,9 +24,34 @@ class Game():
 				self.white_canvas[i+100][j+100]=img[i][j]
 				self.initial_canvas[i+100][j+100]=img[i][j]
 
-
 	def maingame(self):
-		mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas)
+		# Tkクラス生成
+		root = tkinter.Tk()
+		# 画面サイズ
+		root.geometry('300x200')
+		# 画面タイトル
+		root.title('レベル選択')
+
+		self.lvl=0
+
+		# ラベル
+		lbl = tkinter.Label(text='レベル（最小移動回数）を入力してください：')
+		lbl.place(x=30, y=50)
+
+		# テキストボックス
+		txt = tkinter.Entry(width=15)
+		txt.place(x=50, y=70)
+
+		def d_lvl():
+			self.lvl=int(txt.get())
+			root.destroy()
+		#box
+		btn=tkinter.Button(text="決定",command=d_lvl)
+		btn.place(x=180, y=70)
+
+		root.mainloop()
+
+		mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,self.lvl)
 		cv2.setMouseCallback("img",mouse_t.mouse_event)
 
 		#'q'が押されたら終了
@@ -46,7 +73,7 @@ class Mouse(Game):
 	LEFT  = 2
 	UP    = 3
 	DOWN  = 4
-	def __init__(self,canvas_height,canvas_width,white_canvas):
+	def __init__(self,canvas_height,canvas_width,white_canvas,shuffle_t):
 		self.x_hold=0
 		self.y_hold=0
 		self.hold=False
@@ -56,7 +83,7 @@ class Mouse(Game):
 		self.white_canvas=white_canvas
 
 		#シャッフル
-		for i in range(0,3,1):
+		for i in range(0,shuffle_t,1):
 			self.slide_pic(random.randint(1,4),random.randint(100,self.canvas_width-100),random.randint(100,self.canvas_height-100))
 
 	def slide_pic(self,direction,x,y):

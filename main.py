@@ -22,7 +22,13 @@ def helper(event):
 
 	cv2.destroyWindow("操作方法")
 
+
+
 def select_pic(event):
+	if event.widget==b_endl_mode:
+		print("endless")
+	elif event.widget==b_exer_mode:
+		print("exercise")
 	file_type=[("画像ファイル","*.jpg"),("画像ファイル","*.png"),("画像ファイル","*.bmp")]
 	if os.name=="posix":
 		directory="/home/"
@@ -30,22 +36,26 @@ def select_pic(event):
 		directory="c:\\"
 	#askopenfilename 一つのファイルを選択する。
 	filename=filedialog.askopenfilename(filetypes=file_type,initialdir=directory) 
-	root.destroy()
 	if not(len(filename)==0): 
+		root.destroy()
 		start=puzl.Game(filename)
 		start.maingame()
 
 ##main##
 
 label = tkinter.Label(root, text="からくり(仮)", font=("",20))
-label.pack()
+label.grid(row=0, padx=5, pady=50)
 
-b_sel_pic=tkinter.Button(text="画像を選ぶ")
-b_sel_pic.bind("<Button-1>",select_pic)
-b_sel_pic.place(x=300,y=200)
+b_exer_mode=tkinter.Button(text="エクササイズモード")
+b_exer_mode.bind("<Button-1>",select_pic)
+b_exer_mode.grid(row=5, padx=200, pady=10,ipadx=10,sticky=tkinter.W + tkinter.E)
+
+b_endl_mode=tkinter.Button(text="エンドレスモード")
+b_endl_mode.bind("<Button-1>",select_pic)
+b_endl_mode.grid(row=6, padx=200, pady=10,ipadx=10,sticky=tkinter.W + tkinter.E)
 
 b_help=tkinter.Button(text="操作方法")
 b_help.bind("<Button-1>",helper)
-b_help.place(x=300,y=250)
+b_help.grid(row=8, padx=200, pady=100,ipadx=10,sticky=tkinter.W + tkinter.E)
 
 root.mainloop()
