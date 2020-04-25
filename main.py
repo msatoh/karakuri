@@ -15,9 +15,9 @@ def helper(event):
 		ret, frame = cap.read()
 		if ret:
 			cv2.imshow("操作方法", frame)
-			if cv2.waitKey(1) & 0xFF == ord('q'):
+			if cv2.waitKey(30) & 0xFF == ord('q'):
 				break
-		elif cv2.waitKey(1) & 0xFF == ord('q'):
+		elif cv2.waitKey(30) & 0xFF == ord('q'):
 			break
 
 	cv2.destroyWindow("操作方法")
