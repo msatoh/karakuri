@@ -63,11 +63,17 @@ class Game():
 			if cv2.waitKey(1) & 0xff==ord("q"):
 				break
 			elif (self.initial_canvas==self.white_canvas).all():#元の絵に戻った時
-				root = tkinter.Tk()
-				root.withdraw()
-				if messagebox.showinfo("正解","おみごと")=="ok":
-					root.destroy()
-					break
+				if mode=="exercise":
+					root = tkinter.Tk()
+					root.withdraw()
+					if messagebox.showinfo("正解","おみごと")=="ok":
+						root.destroy()
+						break
+				elif mode=="endless":
+					del mouse_t
+					self.lvl+=1
+					mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,self.lvl)
+					cv2.setMouseCallback("img",mouse_t.mouse_event)
 
 		cv2.destroyAllWindows()
 
@@ -76,6 +82,7 @@ class Mouse(Game):
 	LEFT  = 2
 	UP    = 3
 	DOWN  = 4
+
 	def __init__(self,canvas_height,canvas_width,white_canvas,shuffle_t):
 		self.x_hold=0
 		self.y_hold=0
