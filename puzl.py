@@ -1,7 +1,7 @@
 # coding:UTF=8
 
-import numpy,math,random
-import pdb,sys,time,cv2,tkinter
+import numpy,math,random,pygame
+import sys,time,cv2,tkinter#,pdb
 from tkinter import messagebox
 #import pyautogui
 
@@ -25,8 +25,7 @@ class Game():
 				self.initial_canvas[i+100][j+100]=img[i][j]
 
 	def maingame(self,mode):
-
-
+		self.stat="continue"
 		self.lvl=1
 		if mode=="exercise":
 			# Tkクラス生成
@@ -61,21 +60,30 @@ class Game():
 		while(True):
 			cv2.imshow("img",self.white_canvas)
 			if cv2.waitKey(1) & 0xff==ord("q"):
+				self.stat="end"
 				break
 			elif (self.initial_canvas==self.white_canvas).all():#元の絵に戻った時
 				if mode=="exercise":
 					root = tkinter.Tk()
 					root.withdraw()
+					pygame.mixer.init()
+					pygame.mixer.music.load("src/btn15.mp3")
+					pygame.mixer.music.play(0)
 					if messagebox.showinfo("正解","おみごと")=="ok":
 						root.destroy()
 						break
 				elif mode=="endless":
+					pygame.mixer.init()
+					pygame.mixer.music.load("src/btn07.mp3")
+					pygame.mixer.music.play(0)
 					del mouse_t
 					self.lvl+=1
 					mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,self.lvl)
 					cv2.setMouseCallback("img",mouse_t.mouse_event)
 
 		cv2.destroyAllWindows()
+
+		return self.stat
 
 class Mouse(Game):
 	RIGHT = 1

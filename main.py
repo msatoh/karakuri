@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import sys,tkinter,pdb,os,cv2,pygame
+import sys,tkinter,os,cv2,pygame,random#,pdb
 from tkinter import filedialog
 import puzl
 from lib import cv_util
@@ -30,6 +30,7 @@ def helper(event):
 
 
 def select_pic(event):
+	pygame.mixer.music.stop()
 	file_type=[("画像ファイル","*.jpg"),("画像ファイル","*.png"),("画像ファイル","*.bmp")]
 	if os.name=="posix":
 		directory="/home/"
@@ -39,10 +40,12 @@ def select_pic(event):
 		mode="exercise"
 		#askopenfilenames 複数ファイルを選択する。
 		filenames=filedialog.askopenfilenames(filetypes=file_type,initialdir=directory) 
-		if not(len(filename)==0): 
+		if not(len(filenames)==0): 
 			root.destroy()
-			start=puzl.Game(filename)
-			start.maingame(mode)
+			while True:
+				start=puzl.Game(filenames[random.randint(0,len(filenames)-1)])
+				if start.maingame(mode)=="end":
+					break
 	elif event.widget==b_endl_mode:
 		mode="endless"
 		#askopenfilename 一つのファイルを選択する。
