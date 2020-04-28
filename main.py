@@ -31,6 +31,8 @@ def helper(event):
 
 def select_pic(event):
 	pygame.mixer.music.stop()
+	pygame.mixer.music.load("src/MusMus-BGM-065.mp3")
+	pygame.mixer.music.play(-1)
 	file_type=[("画像ファイル","*.jpg"),("画像ファイル","*.png"),("画像ファイル","*.bmp")]
 	if os.name=="posix":
 		directory="/home/"
