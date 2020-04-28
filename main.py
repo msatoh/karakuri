@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import sys,tkinter,pdb,os,cv2
+import sys,tkinter,pdb,os,cv2,pygame
 from tkinter import filedialog
 import puzl
 from lib import cv_util
@@ -9,7 +9,7 @@ root.title("karakuri")
 root.geometry("600x400")
 
 def helper(event):
-	cap = cv2.VideoCapture("mihon.mp4")
+	cap = cv2.VideoCapture("src/mihon.mp4")
 	if not cap.isOpened():
 		sys.exit()
 	while True:
@@ -30,23 +30,33 @@ def helper(event):
 
 
 def select_pic(event):
-	if event.widget==b_endl_mode:
-		mode="endless"
-	elif event.widget==b_exer_mode:
-		mode="exercise"
 	file_type=[("画像ファイル","*.jpg"),("画像ファイル","*.png"),("画像ファイル","*.bmp")]
 	if os.name=="posix":
 		directory="/home/"
 	elif os.name=="nt":
 		directory="c:\\"
-	#askopenfilename 一つのファイルを選択する。
-	filename=filedialog.askopenfilename(filetypes=file_type,initialdir=directory) 
-	if not(len(filename)==0): 
-		root.destroy()
-		start=puzl.Game(filename)
-		start.maingame(mode)
+	if event.widget==b_exer_mode:
+		mode="exercise"
+		#askopenfilenames 複数ファイルを選択する。
+		filenames=filedialog.askopenfilenames(filetypes=file_type,initialdir=directory) 
+		if not(len(filename)==0): 
+			root.destroy()
+			start=puzl.Game(filename)
+			start.maingame(mode)
+	elif event.widget==b_endl_mode:
+		mode="endless"
+		#askopenfilename 一つのファイルを選択する。
+		filename=filedialog.askopenfilename(filetypes=file_type,initialdir=directory) 
+		if not(len(filename)==0): 
+			root.destroy()
+			start=puzl.Game(filename)
+			start.maingame(mode)
 
 ##main##
+
+pygame.mixer.init()
+pygame.mixer.music.load("src/MusMus-BGM-093.mp3")
+pygame.mixer.music.play(-1)
 
 label = tkinter.Label(root, text="からくり(仮)", font=("",20))
 label.grid(row=0, padx=5, pady=50)
