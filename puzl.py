@@ -73,9 +73,9 @@ class Game():
 						root.destroy()
 						break
 				elif mode=="endless":
-					pygame.mixer.init()
-					pygame.mixer.music.load("src/btn07.mp3")
-					pygame.mixer.music.play(0)
+					#pygame.mixer.init()
+					se=pygame.mixer.Sound("src/btn07.wav")
+					se.play()
 					del mouse_t
 					self.lvl+=1
 					mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,self.lvl)
