@@ -36,23 +36,26 @@ def select_pic(event):
 	elif os.name=="nt":
 		directory="c:\\"
 	if event.widget==b_exer_mode:
-		mode="exercise"
 		#askopenfilenames 複数ファイルを選択する。
 		filenames=filedialog.askopenfilenames(filetypes=file_type,initialdir=directory) 
 		if not(len(filenames)==0): 
 			root.destroy()
+			init=True
 			while True:
 				start=puzl.Game(filenames[random.randint(0,len(filenames)-1)])
-				if start.maingame(mode)=="end":
+				if init:
+					if (level:=start.maingame("exercise",cnt))<0:
+						break
+				elif start.maingame("exercise",level)<0:
 					break
+				init=False
 	elif event.widget==b_endl_mode:
-		mode="endless"
 		#askopenfilename 一つのファイルを選択する。
 		filename=filedialog.askopenfilename(filetypes=file_type,initialdir=directory) 
 		if not(len(filename)==0): 
 			root.destroy()
 			start=puzl.Game(filename)
-			start.maingame(mode)
+			start.maingame("endless")
 
 ##main##
 

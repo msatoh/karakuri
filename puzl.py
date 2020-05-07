@@ -23,43 +23,44 @@ class Game():
 				self.white_canvas[i+100][j+100]=img[i][j]
 				self.initial_canvas[i+100][j+100]=img[i][j]
 
-	def maingame(self,mode):
-		self.stat="continue"
-		self.lvl=1
+	def maingame(self,mode,lvl):
+
 		if mode=="exercise":
-			# Tkクラス生成
-			root = tkinter.Tk()
-			# 画面サイズ
-			root.geometry('300x200')
-			# 画面タイトル
-			root.title('レベル選択')
-			# ラベル
-			lbl = tkinter.Label(text='レベル（最小移動回数）を入力してください：')
-			lbl.place(x=30, y=50)
+			if lvl==0:
+				# Tkクラス生成
+				root = tkinter.Tk()
+				# 画面サイズ
+				root.geometry('300x200')
+				# 画面タイトル
+				root.title('レベル選択')
+				# ラベル
+				lbl = tkinter.Label(text='レベル（最小移動回数）を入力してください：')
+				lbl.place(x=30, y=50)
 
-			# テキストボックス
-			txt = tkinter.Entry(width=15)
-			txt.place(x=50, y=70)
+				# テキストボックス
+				txt = tkinter.Entry(width=15)
+				txt.place(x=50, y=70)
 
-			def d_lvl():
-				self.lvl=int(txt.get())
-				root.destroy()
-			#box
-			btn=tkinter.Button(text="決定",command=d_lvl)
-			btn.place(x=180, y=70)
+				def d_lvl_init():
+					self.stat=int(txt.get())
+					root.destroy()
+				#box
+				btn=tkinter.Button(text="決定",command=d_lvl_init)
+				btn.place(x=180, y=70)
 
-			root.mainloop()
+				root.mainloop()
+			else:
+				self.stat=lvl
 
 
-
-		mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,self.lvl)
+		mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,self.stat)
 		cv2.setMouseCallback("img",mouse_t.mouse_event)
 
 		#'q'が押されたら終了
 		while(True):
 			cv2.imshow("img",self.white_canvas)
 			if cv2.waitKey(1) & 0xff==ord("q"):
-				self.stat="end"
+				self.stat=-1
 				break
 			elif (self.initial_canvas==self.white_canvas).all():#元の絵に戻った時
 				if mode=="exercise":
@@ -76,8 +77,8 @@ class Game():
 					se=pygame.mixer.Sound("src/btn07.wav")
 					se.play()
 					del mouse_t
-					self.lvl+=1
-					mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,self.lvl)
+					self.lvl_init+=1
+					mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,self.lvl_init)
 					cv2.setMouseCallback("img",mouse_t.mouse_event)
 
 		cv2.destroyAllWindows()
