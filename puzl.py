@@ -3,7 +3,6 @@
 import numpy,math,random,pygame
 import sys,time,cv2,tkinter#,pdb
 from tkinter import messagebox
-#import pyautogui
 
 class Game():
 
