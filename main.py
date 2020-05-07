@@ -44,7 +44,7 @@ def select_pic(event):
 			while True:
 				start=puzl.Game(filenames[random.randint(0,len(filenames)-1)])
 				if init:
-					if (level:=start.maingame("exercise",cnt))<0:
+					if (level:=start.maingame("exercise",0))<0:
 						break
 				elif start.maingame("exercise",level)<0:
 					break
