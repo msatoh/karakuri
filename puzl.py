@@ -25,30 +25,29 @@ class Game():
 
 	def maingame(self,mode,lvl):
 
-		if mode=="exercise":
-			if lvl==0:
-				# Tkクラス生成
-				root = tkinter.Tk()
-				# 画面サイズ
-				root.geometry('300x200')
-				# 画面タイトル
-				root.title('レベル選択')
-				# ラベル
-				lbl = tkinter.Label(text='レベル（最小移動回数）を入力してください：')
-				lbl.place(x=30, y=50)
+		if mode=="exercise" and lvl==0:
+			# Tkクラス生成
+			root = tkinter.Tk()
+			# 画面サイズ
+			root.geometry('300x200')
+			# 画面タイトル
+			root.title('レベル選択')
+			# ラベル
+			lbl = tkinter.Label(text='レベル（最小移動回数）を入力してください：')
+			lbl.place(x=30, y=50)
 
-				# テキストボックス
-				txt = tkinter.Entry(width=15)
-				txt.place(x=50, y=70)
+			# テキストボックス
+			txt = tkinter.Entry(width=15)
+			txt.place(x=50, y=70)
 
-				def d_lvl_init():
-					self.stat=int(txt.get())
-					root.destroy()
-				#box
-				btn=tkinter.Button(text="決定",command=d_lvl_init)
-				btn.place(x=180, y=70)
+			def d_lvl_init():
+				self.stat=int(txt.get())
+				root.destroy()
+			#box
+			btn=tkinter.Button(text="決定",command=d_lvl_init)
+			btn.place(x=180, y=70)
 
-				root.mainloop()
+			root.mainloop()
 		else:
 			self.stat=lvl
 

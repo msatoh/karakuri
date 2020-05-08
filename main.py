@@ -41,7 +41,7 @@ def select_pic(event):
 		if not(len(filenames)==0): 
 			root.destroy()
 			init=True
-			while True:
+			while True: #maingame関数を何回も呼び直すことで実装
 				start=puzl.Game(filenames[random.randint(0,len(filenames)-1)])
 				if init:
 					if (level:=start.maingame("exercise",0))<0:
@@ -55,7 +55,7 @@ def select_pic(event):
 		if not(len(filename)==0): 
 			root.destroy()
 			start=puzl.Game(filename)
-			start.maingame("endless",1)
+			start.maingame("endless",1) #maingame関数内で実装
 
 ##main##
 
