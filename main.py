@@ -55,7 +55,7 @@ def select_pic(event):
 		if not(len(filename)==0): 
 			root.destroy()
 			start=puzl.Game(filename)
-			start.maingame("endless")
+			start.maingame("endless",1)
 
 ##main##
 

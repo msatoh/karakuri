@@ -49,8 +49,8 @@ class Game():
 				btn.place(x=180, y=70)
 
 				root.mainloop()
-			else:
-				self.stat=lvl
+		else:
+			self.stat=lvl
 
 
 		mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,self.stat)
@@ -77,8 +77,8 @@ class Game():
 					se=pygame.mixer.Sound("src/btn07.wav")
 					se.play()
 					del mouse_t
-					self.lvl_init+=1
-					mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,self.lvl_init)
+					self.stat+=1
+					mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,self.stat)
 					cv2.setMouseCallback("img",mouse_t.mouse_event)
 
 		cv2.destroyAllWindows()
