@@ -55,6 +55,9 @@ class Game():
 		mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,self.stat)
 		cv2.setMouseCallback("img",mouse_t.mouse_event)
 
+		pygame.mixer.music.load("src/MusMus-BGM-065.mp3")
+		pygame.mixer.music.play(-1)
+
 		#'q'が押されたら終了
 		while(True):
 			cv2.imshow("img",self.white_canvas)
