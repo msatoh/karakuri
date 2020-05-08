@@ -58,10 +58,10 @@ class Game():
 		pygame.mixer.music.load("src/MusMus-BGM-065.mp3")
 		pygame.mixer.music.play(-1)
 
-		#'q'が押されたら終了
+
 		while(True):
 			cv2.imshow("img",self.white_canvas)
-			if cv2.waitKey(1) & 0xff==ord("q"):
+			if cv2.waitKey(1) & 0xff==ord("q"):#'q'が押されたら終了
 				self.stat=-1
 				break
 			elif (self.initial_canvas==self.white_canvas).all():#元の絵に戻った時
@@ -85,9 +85,9 @@ class Game():
 
 		cv2.destroyAllWindows()
 
-		return self.stat
+		return self.stat　# -1:終了　0:まだ始まってない ≧1:レベル
 
-class Mouse(Game):
+class Mouse(Game): #基本的にはいじらない。buf_size除く
 	RIGHT = 1
 	LEFT  = 2
 	UP    = 3
@@ -96,15 +96,16 @@ class Mouse(Game):
 	def __init__(self,canvas_height,canvas_width,white_canvas,shuffle_t):
 		self.x_hold=0
 		self.y_hold=0
-		self.hold=False
 		self.buf=numpy.zeros((21,20,3),numpy.uint8)
 		self.canvas_height=canvas_height
 		self.canvas_width=canvas_width
 		self.white_canvas=white_canvas
 
-		#シャッフル
+		#シャッフル shuffle_t:シャッフル回数.=level
 		for i in range(0,shuffle_t,1):
 			self.slide_pic(random.randint(1,4),random.randint(100,self.canvas_width-100),random.randint(100,self.canvas_height-100))
+
+		self.hold=False #１回目の手動操作を受け付けるようにするため、シャッフル後に初期化
 
 	def slide_pic(self,direction,x,y):
 		if direction==self.RIGHT:
@@ -150,6 +151,7 @@ class Mouse(Game):
 		self.hold=True		
 
 	def mouse_event(self,event,x,y,flags,param):
+		print(self.hold)
 		if event==cv2.EVENT_LBUTTONDOWN:
 			self.x_hold=x
 			self.y_hold=y
