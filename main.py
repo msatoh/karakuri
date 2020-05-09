@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import sys,tkinter,os,cv2,pygame,random#,pdb
+import sys,tkinter,os,cv2,pygame,random,pdb
 from tkinter import filedialog
 from PIL import Image, ImageTk
 import puzl
