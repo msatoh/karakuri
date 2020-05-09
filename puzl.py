@@ -28,14 +28,11 @@ class Game():
 		if mode=="exercise" and lvl==0:
 			# Tkクラス生成
 			root = tkinter.Tk()
-			# 画面サイズ
 			root.geometry('300x200')
-			# 画面タイトル
 			root.title('レベル選択')
 			# ラベル
 			lbl = tkinter.Label(text='レベル（最小移動回数）を入力してください：')
 			lbl.place(x=30, y=50)
-
 			# テキストボックス
 			txt = tkinter.Entry(width=15)
 			txt.place(x=50, y=70)
@@ -61,6 +58,7 @@ class Game():
 
 		while(True):
 			cv2.imshow("img",self.white_canvas)
+			#cv2.putText(self.white_canvas,"level: %d"%self.stat,(self.canvas_width-140,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),thickness=1,lineType=cv2.LINE_8)
 			if cv2.waitKey(1) & 0xff==ord("q"):#'q'が押されたら終了
 				self.stat=-1
 				break
@@ -75,7 +73,6 @@ class Game():
 						root.destroy()
 						break
 				elif mode=="endless":
-					#pygame.mixer.init()
 					se=pygame.mixer.Sound("src/btn07.wav")
 					se.play()
 					del mouse_t

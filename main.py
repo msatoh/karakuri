@@ -74,7 +74,7 @@ img = img.resize((100, 100))
 img = ImageTk.PhotoImage(img)
 # canvasサイズ                          
 canv = tkinter.Canvas(width=100, height=100)
-canv.place(x=350, y=10)
+canv.place(x=380, y=10)
 # -------------------------------------                                         
 # キャンバスに画像を表示する                                                    
 canv.create_image(0, 0, image=img, anchor=tkinter.NW)
