@@ -82,7 +82,7 @@ class Game():
 
 		cv2.destroyAllWindows()
 
-		return self.stat　# -1:終了　0:まだ始まってない ≧1:レベル
+		return self.stat # -1:終了　0:まだ始まってない ≧1:レベル
 
 class Mouse(Game): #基本的にはいじらない。buf_size除く
 	RIGHT = 1
@@ -148,7 +148,6 @@ class Mouse(Game): #基本的にはいじらない。buf_size除く
 		self.hold=True		
 
 	def mouse_event(self,event,x,y,flags,param):
-		print(self.hold)
 		if event==cv2.EVENT_LBUTTONDOWN:
 			self.x_hold=x
 			self.y_hold=y
