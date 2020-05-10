@@ -24,31 +24,7 @@ class Game():
 				self.initial_canvas[i+100][j+100]=img[i][j]
 
 	def maingame(self,mode,lvl):
-
-		if mode=="exercise" and lvl==0:
-			# Tkクラス生成
-			root = tkinter.Tk()
-			root.geometry('300x200')
-			root.title('レベル選択')
-			# ラベル
-			lbl = tkinter.Label(text='レベル（最小移動回数）を入力してください：')
-			lbl.place(x=30, y=50)
-			# テキストボックス
-			txt = tkinter.Entry(width=15)
-			txt.place(x=50, y=70)
-
-			def d_lvl_init():
-				self.stat=int(txt.get())
-				root.destroy()
-			#box
-			btn=tkinter.Button(text="決定",command=d_lvl_init)
-			btn.place(x=180, y=70)
-
-			root.mainloop()
-		else:
-			self.stat=lvl
-
-
+		self.stat=lvl
 		mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,self.stat)
 		cv2.setMouseCallback("gameplay",mouse_t.mouse_event)
 
@@ -64,13 +40,13 @@ class Game():
 				break
 			elif (self.initial_canvas[100:self.canvas_height-100][100:self.canvas_width-100]==self.white_canvas[100:self.canvas_height-100][100:self.canvas_width-100]).all():#元の絵に戻った時
 				if mode=="exercise":
-					root = tkinter.Tk()
-					root.withdraw()
+					lvl_slct = tkinter.Tk()
+					lvl_slct.withdraw()
 					pygame.mixer.init()
 					pygame.mixer.music.load("src/btn15.mp3")
 					pygame.mixer.music.play(0)
 					if messagebox.showinfo("正解","おみごと")=="ok":
-						root.destroy()
+						lvl_slct.destroy()
 						break
 				elif mode=="endless":
 					#レベルの表記を消す

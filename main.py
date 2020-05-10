@@ -38,22 +38,39 @@ def select_pic(event):
 		filenames=filedialog.askopenfilenames(filetypes=file_type,initialdir=directory) 
 		if not(len(filenames)==0): 
 			root.destroy()
-			init=True
-			while True: #maingame関数を何回も呼び直すことで実装
-				start=puzl.Game(filenames[random.randint(0,len(filenames)-1)])
-				if init:
-					if (level:=start.maingame("exercise",0))<0:
+
+			# Tkクラス生成
+			lvl_slct = tkinter.Tk()
+			lvl_slct.geometry('300x200')
+			lvl_slct.title('レベル選択')
+			# ラベル
+			lbl = tkinter.Label(text='レベル（移動回数）を入力してください：')
+			lbl.place(x=10, y=50)
+			# テキストボックス
+			txt = tkinter.Entry(width=15)
+			txt.place(x=50, y=70)
+
+			def d_lvl_init():
+				level=int(txt.get())
+				lvl_slct.destroy()
+				while True: #maingame関数を何回も呼び直すことで実装
+					start=puzl.Game(filenames[random.randint(0,len(filenames)-1)])
+					if start.maingame("exercise",level)<0:
 						break
-				elif start.maingame("exercise",level)<0:
-					break
-				init=False
+			#box
+			btn=tkinter.Button(text="決定",command=d_lvl_init)
+			btn.place(x=180, y=70)
+
+			lvl_slct.mainloop()
+
+
 	elif event.widget==b_endl_mode:
 		#askopenfilename 一つのファイルを選択する。
 		filename=filedialog.askopenfilename(filetypes=file_type,initialdir=directory) 
 		if not(len(filename)==0): 
 			root.destroy()
 			start=puzl.Game(filename)
-			start.maingame("endless",1) #maingame関数内で実装
+			start.maingame("endless",level) #maingame関数内で実装
 
 ##main##
 
