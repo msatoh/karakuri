@@ -24,8 +24,9 @@ class Game():
 				self.initial_canvas[i+100][j+100]=img[i][j]
 
 	def maingame(self,mode,lvl):
-		self.stat=lvl
-		mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,self.stat)
+		self.stat=1
+		score=0
+		mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,lvl)
 		cv2.setMouseCallback("gameplay",mouse_t.mouse_event)
 
 		pygame.mixer.music.load("src/MusMus-BGM-065.mp3")
@@ -40,13 +41,15 @@ class Game():
 				break
 			elif (self.initial_canvas[100:self.canvas_height-100][100:self.canvas_width-100]==self.white_canvas[100:self.canvas_height-100][100:self.canvas_width-100]).all():#元の絵に戻った時
 				if mode=="exercise":
-					lvl_slct = tkinter.Tk()
-					lvl_slct.withdraw()
+					omigoto = tkinter.Tk()
+					omigoto.withdraw()
 					pygame.mixer.init()
 					pygame.mixer.music.load("src/btn15.mp3")
 					pygame.mixer.music.play(0)
 					if messagebox.showinfo("正解","おみごと")=="ok":
-						lvl_slct.destroy()
+						omigoto.destroy()
+						score+=1
+						self.stat=score
 						break
 				elif mode=="endless":
 					#レベルの表記を消す
@@ -61,7 +64,7 @@ class Game():
 
 		cv2.destroyAllWindows()
 
-		return self.stat # -1:終了　0:まだ始まってない ≧1:レベル
+		return self.stat # エクササイズ:スコア（解いた数） エンドレス:レベル 途中でやめた場合は-1
 
 class Mouse(Game): #基本的にはいじらない。buf_size除く
 	RIGHT = 1
