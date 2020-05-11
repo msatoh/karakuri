@@ -74,11 +74,12 @@ class Mouse(Game): #基本的にはいじらない。buf_size除く
 	LEFT  = 2
 	UP    = 3
 	DOWN  = 4
+	BUF_SIZE=50
 
 	def __init__(self,canvas_height,canvas_width,white_canvas,shuffle_t):
 		self.x_hold=0
 		self.y_hold=0
-		self.buf=numpy.zeros((21,20,3),numpy.uint8)
+		self.buf=numpy.zeros((self.BUF_SIZE+1,self.BUF_SIZE,3),numpy.uint8)
 		self.canvas_height=canvas_height
 		self.canvas_width=canvas_width
 		self.white_canvas=white_canvas
@@ -91,45 +92,45 @@ class Mouse(Game): #基本的にはいじらない。buf_size除く
 
 	def slide_pic(self,direction,x,y):
 		if direction==self.RIGHT:
-			for i in range(1,21,1):
-				for j in range(1,20,1):
-					self.buf[i-1][j]=self.white_canvas[math.floor((y-1)/20)*20+i-1][self.canvas_width-20+j]
-			for i in range(1,21,1,):
-				for j in range(self.canvas_width,20,-1):
-					self.white_canvas[math.floor((y-1)/20)*20+i-1][j-1]=self.white_canvas[math.floor((y-1)/20)*20+i-1][j-20]
-			for i in range(1,21,1):
-				for j in range(1,20,1):
-					self.white_canvas[math.floor((y-1)/20)*20+i-1][j]=self.buf[i-1][j]
+			for i in range(1,self.BUF_SIZE+1,1):
+				for j in range(1,self.BUF_SIZE,1):
+					self.buf[i-1][j]=self.white_canvas[math.floor((y-1)/self.BUF_SIZE)*self.BUF_SIZE+i-1][self.canvas_width-self.BUF_SIZE+j]
+			for i in range(1,self.BUF_SIZE+1,1,):
+				for j in range(self.canvas_width,self.BUF_SIZE,-1):
+					self.white_canvas[math.floor((y-1)/self.BUF_SIZE)*self.BUF_SIZE+i-1][j-1]=self.white_canvas[math.floor((y-1)/self.BUF_SIZE)*self.BUF_SIZE+i-1][j-self.BUF_SIZE]
+			for i in range(1,self.BUF_SIZE+1,1):
+				for j in range(1,self.BUF_SIZE,1):
+					self.white_canvas[math.floor((y-1)/self.BUF_SIZE)*self.BUF_SIZE+i-1][j]=self.buf[i-1][j]
 		elif direction==self.LEFT:
-			for i in range(1,21,1):
-				for j in range(1,20,1):
-					self.buf[i-1][j]=self.white_canvas[math.floor((y-1)/20)*20+i-1][j]
-			for i in range(1,21,1,):
-				for j in range(20,self.canvas_width,1):
-					self.white_canvas[math.floor((y-1)/20)*20+i-1][j-20]=self.white_canvas[math.floor((y-1)/20)*20+i-1][j-1]
-			for i in range(1,21,1):
-				for j in range(1,20,1):
-					self.white_canvas[math.floor((y-1)/20)*20+i-1][self.canvas_width-20+j]=self.buf[i-1][j]
+			for i in range(1,self.BUF_SIZE+1,1):
+				for j in range(1,self.BUF_SIZE,1):
+					self.buf[i-1][j]=self.white_canvas[math.floor((y-1)/self.BUF_SIZE)*self.BUF_SIZE+i-1][j]
+			for i in range(1,self.BUF_SIZE+1,1,):
+				for j in range(self.BUF_SIZE,self.canvas_width,1):
+					self.white_canvas[math.floor((y-1)/self.BUF_SIZE)*self.BUF_SIZE+i-1][j-self.BUF_SIZE]=self.white_canvas[math.floor((y-1)/self.BUF_SIZE)*self.BUF_SIZE+i-1][j-1]
+			for i in range(1,self.BUF_SIZE+1,1):
+				for j in range(1,self.BUF_SIZE,1):
+					self.white_canvas[math.floor((y-1)/self.BUF_SIZE)*self.BUF_SIZE+i-1][self.canvas_width-self.BUF_SIZE+j]=self.buf[i-1][j]
 		elif direction==self.UP:
-			for i in range(1,20,1):
-				for j in range(0,20,1):
-					self.buf[i][j]=self.white_canvas[i][math.floor((x-1)/20)*20+j-1]
-			for i in range(0,self.canvas_height-20,1,):
-				for j in range(0,20,1):
-					self.white_canvas[i][math.floor((x-1)/20)*20+j-1]=self.white_canvas[i+20][math.floor((x-1)/20)*20+j-1]
-			for i in range(1,20,1):
-				for j in range(0,20,1):
-					self.white_canvas[self.canvas_height-20+i][math.floor((x-1)/20)*20+j-1]=self.buf[i][j]
+			for i in range(1,self.BUF_SIZE,1):
+				for j in range(0,self.BUF_SIZE,1):
+					self.buf[i][j]=self.white_canvas[i][math.floor((x-1)/self.BUF_SIZE)*self.BUF_SIZE+j-1]
+			for i in range(0,self.canvas_height-self.BUF_SIZE,1,):
+				for j in range(0,self.BUF_SIZE,1):
+					self.white_canvas[i][math.floor((x-1)/self.BUF_SIZE)*self.BUF_SIZE+j-1]=self.white_canvas[i+self.BUF_SIZE][math.floor((x-1)/self.BUF_SIZE)*self.BUF_SIZE+j-1]
+			for i in range(1,self.BUF_SIZE,1):
+				for j in range(0,self.BUF_SIZE,1):
+					self.white_canvas[self.canvas_height-self.BUF_SIZE+i][math.floor((x-1)/self.BUF_SIZE)*self.BUF_SIZE+j-1]=self.buf[i][j]
 		elif direction==self.DOWN:
-			for i in range(1,20,1):
-				for j in range(0,20,1):
-					self.buf[i][j]=self.white_canvas[self.canvas_height-20+i][math.floor((x-1)/20)*20+j-1]
-			for i in range(self.canvas_height-20,1,-1,):
-				for j in range(0,20,1):
-					self.white_canvas[i+19][math.floor((x-1)/20)*20+j-1]=self.white_canvas[i-1][math.floor((x-1)/20)*20+j-1]
-			for i in range(1,20,1):
-				for j in range(0,20,1):
-					self.white_canvas[i][math.floor((x-1)/20)*20+j-1]=self.buf[i][j]			
+			for i in range(1,self.BUF_SIZE,1):
+				for j in range(0,self.BUF_SIZE,1):
+					self.buf[i][j]=self.white_canvas[self.canvas_height-self.BUF_SIZE+i][math.floor((x-1)/self.BUF_SIZE)*self.BUF_SIZE+j-1]
+			for i in range(self.canvas_height-self.BUF_SIZE,1,-1,):
+				for j in range(0,self.BUF_SIZE,1):
+					self.white_canvas[i+self.BUF_SIZE-1][math.floor((x-1)/self.BUF_SIZE)*self.BUF_SIZE+j-1]=self.white_canvas[i-1][math.floor((x-1)/self.BUF_SIZE)*self.BUF_SIZE+j-1]
+			for i in range(1,self.BUF_SIZE,1):
+				for j in range(0,self.BUF_SIZE,1):
+					self.white_canvas[i][math.floor((x-1)/self.BUF_SIZE)*self.BUF_SIZE+j-1]=self.buf[i][j]			
 		self.hold=True		
 
 	def mouse_event(self,event,x,y,flags,param):
