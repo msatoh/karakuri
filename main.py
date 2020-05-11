@@ -61,11 +61,13 @@ def select_pic(event):
 			btn.place(x=180, y=70)
 
 			lvl_slct.mainloop()
-
+			score=0
 			while True: #maingame関数を何回も呼び直すことで実装
 				start=puzl.Game(filenames[random.randint(0,len(filenames)-1)])
-				if start.maingame("exercise",level)<0:
+				if start.maingame(score,level)<0:
 					break
+				else:
+					score+=1
 
 
 	elif event.widget==b_endl_mode:
@@ -74,7 +76,7 @@ def select_pic(event):
 		if not(len(filename)==0): 
 			root.destroy()
 			start=puzl.Game(filename)
-			start.maingame("endless",1) #maingame関数内で実装
+			start.maingame(-1,1) #maingame関数内で実装
 
 ##main##
 

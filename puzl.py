@@ -25,7 +25,6 @@ class Game():
 
 	def maingame(self,mode,lvl):
 		self.stat=1
-		score=0
 		mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,lvl)
 		cv2.setMouseCallback("gameplay",mouse_t.mouse_event)
 
@@ -35,12 +34,16 @@ class Game():
 
 		while(True):
 			cv2.imshow("gameplay",self.white_canvas)
-			cv2.putText(self.white_canvas,"level: %d"%self.stat,(self.canvas_width-140,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),thickness=1,lineType=cv2.LINE_8)
+			if mode>=0:
+				disp=mode
+			else:
+				disp=self.stat
+			cv2.putText(self.white_canvas,"score %d"%disp,(self.canvas_width-140,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),thickness=1,lineType=cv2.LINE_8)
 			if cv2.waitKey(1) & 0xff==ord("q"):#'q'が押されたら終了
 				self.stat=-1
 				break
 			elif (self.initial_canvas[100:self.canvas_height-100][100:self.canvas_width-100]==self.white_canvas[100:self.canvas_height-100][100:self.canvas_width-100]).all():#元の絵に戻った時
-				if mode=="exercise":
+				if mode>=0:
 					omigoto = tkinter.Tk()
 					omigoto.withdraw()
 					pygame.mixer.init()
@@ -48,10 +51,10 @@ class Game():
 					pygame.mixer.music.play(0)
 					if messagebox.showinfo("正解","おみごと")=="ok":
 						omigoto.destroy()
-						score+=1
-						self.stat=score
+						mode+=1
+						self.stat=mode
 						break
-				elif mode=="endless":
+				else:
 					#レベルの表記を消す
 					for i in range(0,100,1):
 						self.white_canvas[i][self.canvas_width-140:self.canvas_width-1]=(255,255,255)
@@ -64,7 +67,7 @@ class Game():
 
 		cv2.destroyAllWindows()
 
-		return self.stat # エクササイズ:スコア（解いた数） エンドレス:レベル 途中でやめた場合は-1
+		return self.stat # エクササイズ:スコア（解いた数） 途中でやめた場合は-1
 
 class Mouse(Game): #基本的にはいじらない。buf_size除く
 	RIGHT = 1
