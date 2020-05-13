@@ -76,7 +76,7 @@ def select_pic(event):
 		if not(len(filename)==0): 
 			root.destroy()
 			start=puzl.Game(filename)
-			start.maingame(-1,1) #maingame関数内で実装
+			print("score: ",start.maingame(-1,1)) #maingame関数内で実装
 
 ##main##
 
