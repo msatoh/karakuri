@@ -41,7 +41,7 @@ class Game():
 			cv2.putText(self.white_canvas,"score %d"%disp,(self.canvas_width-140,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),thickness=1,lineType=cv2.LINE_8)
 			if cv2.waitKey(1) & 0xff==ord("q"):#'q'が押されたら終了
 				break
-			elif (self.initial_canvas[100:self.canvas_height-100][100:self.canvas_width-100]==self.white_canvas[100:self.canvas_height-100][100:self.canvas_width-100]).all():#元の絵に戻った時
+			elif (self.initial_canvas[100:self.canvas_height-100,100:self.canvas_width-100]==self.white_canvas[100:self.canvas_height-100,100:self.canvas_width-100]).all():#元の絵に戻った時
 				if mode>=0:
 					omigoto = tkinter.Tk()
 					omigoto.withdraw()
