@@ -24,7 +24,24 @@ def helper(event):
 
 	cv2.destroyWindow("操作方法")
 
+def f_result(sc):
 
+	w_result = tkinter.Tk()
+	w_result.geometry('400x300')
+	w_result.title('スコア')
+	# ラベル
+	scr = tkinter.Label(text="あなたのスコアは"+str(sc)+"です！")
+	scr.place(x=10, y=50)
+	enter_name = tkinter.Label(text="entry youe name:")
+	enter_name.place(x=10, y=80)
+	t_name = tkinter.Entry(width=15)
+	t_name.place(x=150, y=80)
+	def ok_end():
+		w_result.destroy()
+	#box
+	b_end=tkinter.Button(text="終了",command=ok_end)
+	b_end.place(x=200,y=120)
+	w_result.mainloop()
 
 def select_pic(event):
 	pygame.mixer.music.stop()
@@ -76,7 +93,7 @@ def select_pic(event):
 		if not(len(filename)==0): 
 			root.destroy()
 			start=puzl.Game(filename)
-			print("score: ",start.maingame(-1,1)) #maingame関数内で実装
+			f_result(start.maingame(-1,1)) #maingame関数内で実装
 
 ##main##
 
