@@ -25,13 +25,15 @@ def helper(event):
 	cv2.destroyWindow("操作方法")
 
 def f_result(sc):
-
+	pygame.mixer.music.stop()
+	fanfare=pygame.mixer.Sound("src/ファンファーレ4.wav")
+	fanfare.play()
 	w_result = tkinter.Tk()
 	w_result.geometry('400x300')
 	w_result.title('スコア')
 	# ラベル
-	scr = tkinter.Label(text="あなたのスコアは"+str(sc)+"です！")
-	scr.place(x=10, y=50)
+	scr = tkinter.Label(text="あなたのスコアは"+str(sc)+"です！",font=("",20))
+	scr.place(x=10, y=40)
 	enter_name = tkinter.Label(text="entry youe name:")
 	enter_name.place(x=10, y=80)
 	t_name = tkinter.Entry(width=15)

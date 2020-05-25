@@ -28,7 +28,7 @@ class Game():
 		mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,lvl)
 		cv2.setMouseCallback("gameplay",mouse_t.mouse_event)
 
-		pygame.mixer.music.load("src/MusMus-BGM-065.mp3")
+		pygame.mixer.music.load("src/MusMus-BGM-085.mp3")
 		pygame.mixer.music.play(-1)
 
 
