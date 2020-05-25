@@ -4,6 +4,7 @@ from tkinter import filedialog
 from PIL import Image, ImageTk
 import puzl
 from lib import cv_util
+from functools import partial
 
 def helper(event):
 	cap = cv2.VideoCapture("src/mihon.mp4")
@@ -24,6 +25,21 @@ def helper(event):
 
 	cv2.destroyWindow("操作方法")
 
+def disp_ranking(name,d_score):
+	d_rank=tkinter.Tk()
+	d_rank.geometry("400x300")
+	d_rank.title("ランキング")
+	pygame.mixer.music.load("src/MusMus-BGM-019.mp3")
+	pygame.mixer.music.play(-1)
+	def end_end():
+		d_rank.destroy()
+		pygame.mixer.music.load("src/MusMus-BGM-093.mp3")
+		pygame.mixer.music.play(-1)
+	#box
+	e_end=tkinter.Button(d_rank,text="終了",command=end_end)
+	e_end.place(x=200,y=120)
+	d_rank.mainloop()
+
 def f_result(sc):
 	pygame.mixer.music.stop()
 	fanfare=pygame.mixer.Sound("src/ファンファーレ4.wav")
@@ -40,6 +56,7 @@ def f_result(sc):
 	t_name.place(x=150, y=80)
 	def ok_end():
 		w_result.destroy()
+		disp_ranking(t_name.get(),sc)
 	#box
 	b_end=tkinter.Button(text="終了",command=ok_end)
 	b_end.place(x=200,y=120)
@@ -129,8 +146,12 @@ b_endl_mode=tkinter.Button(text="エンドレスモード")
 b_endl_mode.bind("<Button-1>",select_pic)
 b_endl_mode.grid(row=6, padx=200, pady=10,ipadx=10,sticky=tkinter.W + tkinter.E)
 
+b_rank=tkinter.Button(text="ランキング",command=partial(disp_ranking,"",-1))
+b_rank.bind("<Button-1>",partial(disp_ranking,"",-1))
+b_rank.grid(row=7, padx=200, pady=30,ipadx=10,sticky=tkinter.W + tkinter.E)
+
 b_help=tkinter.Button(text="操作方法")
 b_help.bind("<Button-1>",helper)
-b_help.grid(row=8, padx=200, pady=100,ipadx=10,sticky=tkinter.W + tkinter.E)
+b_help.grid(row=8, padx=200, pady=0,ipadx=10,sticky=tkinter.W + tkinter.E)
 
 root.mainloop()
