@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-import sys,tkinter,os,cv2,pygame,random,pdb
+import sys,tkinter,os,cv2,pygame,random,pdb,csv
 from tkinter import filedialog
 from PIL import Image, ImageTk
 import puzl
 from lib import cv_util
 from functools import partial
+import cryptography
+from cryptography.fernet import Fernet
 
 def helper(event):
 	cap = cv2.VideoCapture("src/mihon.mp4")
@@ -56,6 +58,15 @@ def f_result(sc):
 	t_name.place(x=150, y=80)
 	def ok_end():
 		w_result.destroy()
+		key=b"23456789012345678901234azZa+216549780219021="
+		f=open("src/rank.csv","rb")
+		data=f.read()
+		fernet=Fernet(key)
+		enc=fernet.decrypt(data)
+		f.close()
+		f=open("src/rank.csv","wb")
+		
+		#f.write(enc)
 		disp_ranking(t_name.get(),sc)
 	#box
 	b_end=tkinter.Button(text="終了",command=ok_end)
