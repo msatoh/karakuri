@@ -1,4 +1,23 @@
-import sys,csv,pdb,itertools
+import sys,csv,pdb,cryptography
+from cryptography.fernet import Fernet
+
+key=b"23456789012345678901234azZa+216549780219021="
+
+def crypt_csv():
+	with open("src/rank.csv","rb") as f:
+		data=f.read()
+		fernet=Fernet(key)
+		encrypted=fernet.encrypt(data)
+	with open("src/rank_enc.csv","wb") as f:
+		f.write(encrypted)
+
+def dec_csv():
+	with open("src/rank_enc.csv","rb") as f:
+		data=f.read()
+		fernet=Fernet(key)
+		decrypted=fernet.decrypt(data)
+	with open("src/rank_dec.csv","wb") as f:
+		f.write(decrypted)
 
 def fileoc(name,score):
 	with open("src/rank.csv") as f:
@@ -28,3 +47,5 @@ def fileoc(name,score):
 
 #testbench#
 fileoc(sys.argv[1],sys.argv[2])
+crypt_csv()
+dec_csv()
