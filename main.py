@@ -2,11 +2,9 @@
 import sys,tkinter,os,cv2,pygame,random,pdb,csv
 from tkinter import filedialog
 from PIL import Image, ImageTk
-import puzl
+import puzl,db
 from lib import cv_util
-from functools import partial
-import cryptography
-from cryptography.fernet import Fernet
+#from functools import partial --ウィジェット選択時の関数に引数を与える
 
 def helper(event):
 	cap = cv2.VideoCapture("src/mihon.mp4")
@@ -27,19 +25,29 @@ def helper(event):
 
 	cv2.destroyWindow("操作方法")
 
-def disp_ranking(name,d_score):
+def disp_ranking(event):
+
+	def end_end():
+		d_rank.destroy()
+		pygame.mixer.music.stop()
+		pygame.mixer.music.load("src/MusMus-BGM-093.mp3")
+		pygame.mixer.music.play(-1)
+
 	d_rank=tkinter.Tk()
 	d_rank.geometry("400x300")
 	d_rank.title("ランキング")
 	pygame.mixer.music.load("src/MusMus-BGM-019.mp3")
 	pygame.mixer.music.play(-1)
-	def end_end():
-		d_rank.destroy()
-		pygame.mixer.music.load("src/MusMus-BGM-093.mp3")
-		pygame.mixer.music.play(-1)
+
+	disp_r=[[]*2]*5
+	r=db.fileoc("","-1")
+	for i in range(0,5,1):
+		disp_r[i]=tkinter.Label(d_rank,text=str(i+1)+"位:\t"+r[i][0]+"\t"+r[i][1], font=("",18))
+		disp_r[i].grid(row=i, padx=75, pady=4)
 	#box
 	e_end=tkinter.Button(d_rank,text="終了",command=end_end)
-	e_end.place(x=200,y=120)
+	e_end.place(x=180,y=240)
+
 	d_rank.mainloop()
 
 def f_result(sc):
@@ -57,21 +65,38 @@ def f_result(sc):
 	t_name = tkinter.Entry(width=15)
 	t_name.place(x=150, y=80)
 	def ok_end():
-		w_result.destroy()
-		key=b"23456789012345678901234azZa+216549780219021="
-		f=open("src/rank.csv","rb")
-		data=f.read()
-		fernet=Fernet(key)
-		enc=fernet.decrypt(data)
-		f.close()
-		f=open("src/rank.csv","wb")
-		
-		#f.write(enc)
-		disp_ranking(t_name.get(),sc)
+		d_name=t_name.get()
+		w_result.destroy()#d_nameを取得してから画面を消す
+		db.fileoc(str(d_name),str(sc))
+		disp_ranking(0)
 	#box
 	b_end=tkinter.Button(text="終了",command=ok_end)
 	b_end.place(x=200,y=120)
 	w_result.mainloop()
+
+def level_select():
+	# Tkクラス生成
+	lvl_slct = tkinter.Tk()
+	lvl_slct.geometry('300x200')
+	lvl_slct.title('レベル選択')
+	# ラベル
+	lbl = tkinter.Label(text='レベル（移動回数）を入力してください：')
+	lbl.place(x=10, y=50)
+	# テキストボックス
+	txt = tkinter.Entry(width=15)
+	txt.place(x=50, y=70)
+
+	def d_lvl_init():
+		global level
+		level=int(txt.get())
+		if level==0:
+			level=999
+		lvl_slct.destroy()
+	#box
+	btn=tkinter.Button(text="決定",command=d_lvl_init)
+	btn.place(x=180, y=70)
+
+	lvl_slct.mainloop()
 
 def select_pic(event):
 	pygame.mixer.music.stop()
@@ -86,28 +111,8 @@ def select_pic(event):
 		if not(len(filenames)==0): 
 			root.destroy()
 
-			# Tkクラス生成
-			lvl_slct = tkinter.Tk()
-			lvl_slct.geometry('300x200')
-			lvl_slct.title('レベル選択')
-			# ラベル
-			lbl = tkinter.Label(text='レベル（移動回数）を入力してください：')
-			lbl.place(x=10, y=50)
-			# テキストボックス
-			txt = tkinter.Entry(width=15)
-			txt.place(x=50, y=70)
+			level_select()
 
-			def d_lvl_init():
-				global level
-				level=int(txt.get())
-				if level==0:
-					level=999
-				lvl_slct.destroy()
-			#box
-			btn=tkinter.Button(text="決定",command=d_lvl_init)
-			btn.place(x=180, y=70)
-
-			lvl_slct.mainloop()
 			score=0
 			while True: #maingame関数を何回も呼び直すことで実装
 				start=puzl.Game(filenames[random.randint(0,len(filenames)-1)])
@@ -115,7 +120,6 @@ def select_pic(event):
 					break
 				else:
 					score+=1
-
 
 	elif event.widget==b_endl_mode:
 		#askopenfilename 一つのファイルを選択する。
@@ -157,8 +161,8 @@ b_endl_mode=tkinter.Button(text="エンドレスモード")
 b_endl_mode.bind("<Button-1>",select_pic)
 b_endl_mode.grid(row=6, padx=200, pady=10,ipadx=10,sticky=tkinter.W + tkinter.E)
 
-b_rank=tkinter.Button(text="ランキング",command=partial(disp_ranking,"",-1))
-b_rank.bind("<Button-1>",partial(disp_ranking,"",-1))
+b_rank=tkinter.Button(text="ランキング")
+b_rank.bind("<Button-1>",disp_ranking)
 b_rank.grid(row=7, padx=200, pady=30,ipadx=10,sticky=tkinter.W + tkinter.E)
 
 b_help=tkinter.Button(text="操作方法")
