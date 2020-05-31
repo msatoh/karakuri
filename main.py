@@ -41,9 +41,13 @@ def disp_ranking(event):
 
 	disp_r=[[]*2]*5
 	r=db.fileoc("","-1")
-	for i in range(0,5,1):
+	i=0
+	for cnt in r:
 		disp_r[i]=tkinter.Label(d_rank,text=str(i+1)+"位:\t"+r[i][0]+"\t"+r[i][1], font=("",18))
 		disp_r[i].grid(row=i, padx=75, pady=4)
+		i+=1
+		if i==5:
+			break
 	#box
 	e_end=tkinter.Button(d_rank,text="終了",command=end_end)
 	e_end.place(x=180,y=240)
