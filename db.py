@@ -14,7 +14,8 @@ def crypt_csv(list):
 def dec_csv():
 	with open("src/rank.csv","rb") as f:
 		data=f.read()
-		data.decode()
+		print("DATA",data)
+		print(type(data))
 		if data==b"":
 			return data
 		fernet=Fernet(key)
@@ -22,11 +23,13 @@ def dec_csv():
 
 def fileoc(name,score):
 	reader=dec_csv()
-	reader.decode()
-	# for row in reader:
-	# 	print("row: ",row)
+	reader=reader.decode()
+	print("reader",type(reader))
+
+	print("READER",reader)
+	print(type(reader))
 	l=[row for row in reader]
-	print("l: ",l)
+	print("l: ",l,type(l))
 		
 	pos=0#初期化
 	if not(score=="-1"):#-1:ランキング表示時。-1以外:スコア書き込み
@@ -47,18 +50,13 @@ def fileoc(name,score):
 			sys.stdout=f
 			print(l)
 			in_put=f.getvalue()
-			in_put.encode()
 			sys.stdout=sys.__stdout__
-		# i=0
-		# j=0
-		# for rnk in l:
-		# 	for elm in rnk:
-		# 		in_put[i][j]=elm.encode()
-		# 		j+=1
-		# 	i+=1
+			in_put=in_put.rstrip("\n")
+			print(in_put,",",type(in_put))
+
 		crypt_csv(in_put)
 
 	return l
 
 #testbench#
-#fileoc(sys.argv[1],sys.argv[2])
+fileoc(sys.argv[1],sys.argv[2])
