@@ -24,12 +24,15 @@ def dec_csv():
 def fileoc(name,score):
 	reader=dec_csv()
 	reader=reader.decode()
-	print("reader",type(reader))
+	with io.StringIO() as f:
+		sys.stdout=f
+		print(reader,end=None)
+		sys.stdout=sys.__stdout__
+		read=csv.reader(f)
 
-	print("READER",reader)
-	print(type(reader))
-	l=[row for row in reader]
-	print("l: ",l,type(l))
+		print("read",read,type(read))
+		l=[row for row in read]
+		print("l: ",l,type(l))
 		
 	pos=0#初期化
 	if not(score=="-1"):#-1:ランキング表示時。-1以外:スコア書き込み
