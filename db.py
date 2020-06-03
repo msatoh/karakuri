@@ -61,4 +61,4 @@ def fileoc(name,score):
 	return l
 
 #testbench#
-#fileoc(sys.argv[1],sys.argv[2])
+fileoc(sys.argv[1],sys.argv[2])
