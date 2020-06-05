@@ -22,9 +22,9 @@ def dec_csv():
 def fileoc(name,score):
 	reader=dec_csv()
 	reader=reader.decode()
-	print("reader",reader)
+	#print("reader",reader)
 	if not(reader==""):
-		#print("tes")
+		#print("initial")
 		l=reader.split("\n")
 		pos=0
 		for cnt in l:
@@ -54,7 +54,7 @@ def fileoc(name,score):
 			in_put=f.getvalue()
 			sys.stdout=sys.__stdout__
 			in_put=in_put.rstrip("\n")
-			print(in_put,"&",type(in_put))
+			#print(in_put,"&",type(in_put))
 
 		crypt_csv(in_put)
 
