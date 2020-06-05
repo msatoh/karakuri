@@ -23,9 +23,6 @@ def fileoc(name,score):
 	reader=dec_csv()
 	reader=reader.decode()
 	print("reader",reader)
-	# read=csv.reader(reader)
-	# print("read",read)
-	# l=[row for row in reader]
 	if not(reader==""):
 		print("tes")
 		l=reader.split("\n")
@@ -33,7 +30,6 @@ def fileoc(name,score):
 		for cnt in l:
 			l[pos]=l[pos].split(",")
 			pos+=1
-		#l=[l]
 	else:
 	 	l=[]
 
@@ -50,16 +46,13 @@ def fileoc(name,score):
 		add=[0]*2
 		add[0]=name
 		add[1]=score
-		adder=[add]
-		l.insert(pos-1,add)
+		l.insert(pos,add)
+		l=l[0:9]
 		print(l)
-		# in_put=",".join(l[0:9])
-		# in_put.encode()
 
 		with io.StringIO() as f:
 			sys.stdout=f
 			writer=csv.writer(f,lineterminator="\n")
-			#print(l)
 			writer.writerows(l)
 			in_put=f.getvalue()
 			sys.stdout=sys.__stdout__
@@ -71,4 +64,4 @@ def fileoc(name,score):
 	return l
 
 #testbench#
-fileoc(sys.argv[1],sys.argv[2])
+#fileoc(sys.argv[1],sys.argv[2])
