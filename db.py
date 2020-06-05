@@ -2,25 +2,29 @@
 import sys,io,csv,pdb,cryptography
 from cryptography.fernet import Fernet
 
-key=b"23456789012345678901234azZa+216549780219021="
+class cip():
 
-def crypt_csv(list):
-	data=list.encode()
-	fernet=Fernet(key)
-	encrypted=fernet.encrypt(data)
-	with open("src/rank.csv","wb") as f:
-		f.write(encrypted)
+	key=b"23456789012345678901234azZa+216549780219021="
 
-def dec_csv():
-	with open("src/rank.csv","rb") as f:
-		data=f.read()
-		if data==b"":
-			return data
-		fernet=Fernet(key)
-		return fernet.decrypt(data)
+	def crypt_csv(self,list):
+		self.data=list.encode()
+		self.fernet=Fernet(self.key)
+		self.encrypted=self.fernet.encrypt(self.data)
+		with open("src/rank.csv","wb") as f:
+			f.write(self.encrypted)
+
+	def dec_csv(self):
+		with open("src/rank.csv","rb") as f:
+			self.data=f.read()
+			if self.data==b"":
+				return self.data
+			self.fernet=Fernet(self.key)
+			return self.fernet.decrypt(self.data)
+
 
 def fileoc(name,score):
-	reader=dec_csv()
+	cip_t=cip()
+	reader=cip_t.dec_csv()
 	reader=reader.decode()
 	#print("reader",reader)
 	if not(reader==""):
@@ -56,7 +60,7 @@ def fileoc(name,score):
 			in_put=in_put.rstrip("\n")
 			#print(in_put,"&",type(in_put))
 
-		crypt_csv(in_put)
+		cip_t.crypt_csv(in_put)
 
 	return l
 

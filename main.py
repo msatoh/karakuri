@@ -16,12 +16,12 @@ def helper(event):
 			cv2.imshow("操作方法", frame)
 			if cv2.waitKey(30) & 0xFF == ord('q'):
 				break
-			elif not cv_util._is_visible("操作方法"):
-				break
+			# elif not cv_util._is_visible("操作方法"):
+			# 	break
 		elif cv2.waitKey(30) & 0xFF == ord('q'):
 			break
-		elif not cv_util._is_visible("操作方法"):
-			break
+		# elif not cv_util._is_visible("操作方法"):
+		# 	break
 
 	cv2.destroyWindow("操作方法")
 
