@@ -22,35 +22,49 @@ def dec_csv():
 def fileoc(name,score):
 	reader=dec_csv()
 	reader=reader.decode()
-	print("reader",(reader))
-	read=(csv.reader(reader))
-	print("read",read)
-	l=[row for row in read]
+	print("reader",reader)
+	# read=csv.reader(reader)
+	# print("read",read)
+	# l=[row for row in reader]
+	if not(reader==""):
+		print("tes")
+		l=reader.split("\n")
+		pos=0
+		for cnt in l:
+			l[pos]=l[pos].split(",")
+			pos+=1
+		#l=[l]
+	else:
+	 	l=[]
 
 	print("l: ",l,type(l))
-		
 	pos=0#初期化
+
 	if not(score=="-1"):#-1:ランキング表示時。-1以外:スコア書き込み
-		for cnt in l:
-			if int(l[pos][1])<int(score):
-				break
-			pos+=1
+		if not(l==[]):
+			for cnt in l:
+				if int(l[pos][1])<int(score):
+					break
+				pos+=1
 
 		add=[0]*2
 		add[0]=name
 		add[1]=score
 		adder=[add]
 		l.insert(pos-1,add)
+		print(l)
 		# in_put=",".join(l[0:9])
 		# in_put.encode()
 
 		with io.StringIO() as f:
 			sys.stdout=f
-			print(l)
+			writer=csv.writer(f,lineterminator="\n")
+			#print(l)
+			writer.writerows(l)
 			in_put=f.getvalue()
 			sys.stdout=sys.__stdout__
 			in_put=in_put.rstrip("\n")
-			print(in_put,",",type(in_put))
+			print(in_put,"&",type(in_put))
 
 		crypt_csv(in_put)
 
