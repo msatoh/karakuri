@@ -5,6 +5,14 @@ import sys,time,cv2,tkinter,pdb
 from tkinter import messagebox
 
 class Game():
+# +---------------------------------------------------------+
+# + __init__                                                |
+# + ...読み込んだ画像の周りを白埋めしたデータを用意する             |
+# +                                                         |
+# + maingame                                                |
+# + ...マウスイベント(class Mouse())をセットする                |
+# +    音楽を再生して__init__で用意した画像を表示し、正解判定を行う。|
+# +---------------------------------------------------------+
 
 	def __init__(self,file_name):
 
@@ -23,8 +31,8 @@ class Game():
 				self.white_canvas[i+100][j+100]=img[i][j]
 				self.initial_canvas[i+100][j+100]=img[i][j]
 
-	def maingame(self,mode,lvl):
-		self.stat=1
+	def maingame(self,mode,lvl): #mode: エクササイズのスコア lvl: レベル初期値
+		self.stat=1 #エンドレスのレベル
 		mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,lvl)
 		cv2.setMouseCallback("gameplay",mouse_t.mouse_event)
 
@@ -66,7 +74,7 @@ class Game():
 
 		cv2.destroyAllWindows()
 
-		return self.stat # エクササイズ:スコア（解いた数） 途中でやめた場合は-1
+		return self.stat
 
 class Mouse(Game): #基本的にはいじらない。buf_size除く
 	RIGHT = 1
