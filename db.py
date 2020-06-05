@@ -14,7 +14,6 @@ def crypt_csv(list):
 def dec_csv():
 	with open("src/rank.csv","rb") as f:
 		data=f.read()
-		data.decode()
 		if data==b"":
 			return data
 		fernet=Fernet(key)
@@ -22,40 +21,41 @@ def dec_csv():
 
 def fileoc(name,score):
 	reader=dec_csv()
-	reader.decode()
-	# for row in reader:
-	# 	print("row: ",row)
-	l=[row for row in reader]
-	print("l: ",l)
-		
-	pos=0#初期化
-	if not(score=="-1"):#-1:ランキング表示時。-1以外:スコア書き込み
+	reader=reader.decode()
+	print("reader",reader)
+	if not(reader==""):
+		#print("tes")
+		l=reader.split("\n")
+		pos=0
 		for cnt in l:
-			if int(l[pos][1])<int(score):
-				break
+			l[pos]=l[pos].split(",")
 			pos+=1
+	else:
+	 	l=[]
 
-		add=[0]*2
-		add[0]=name
-		add[1]=score
-		adder=[add]
-		l.insert(pos-1,add)
-		# in_put=",".join(l[0:9])
-		# in_put.encode()
+	#print("l: ",l,type(l))
+	pos=0#初期化
 
-		with io.StringIO() as f:
+	if not(score=="-1"):#-1:ランキング表示時。-1以外:スコア書き込み
+		if not(l==[]):
+			for cnt in l:
+				if int(l[pos][1])<int(score):
+					break
+				pos+=1
+
+		l.insert(pos,[name,score])
+		l=l[0:9]
+		#print("l",l)
+
+		with io.StringIO() as f: #l→crypt_csvに文字列として渡す
 			sys.stdout=f
-			print(l)
+			writer=csv.writer(f,lineterminator="\n")
+			writer.writerows(l)
 			in_put=f.getvalue()
-			in_put.encode()
 			sys.stdout=sys.__stdout__
-		# i=0
-		# j=0
-		# for rnk in l:
-		# 	for elm in rnk:
-		# 		in_put[i][j]=elm.encode()
-		# 		j+=1
-		# 	i+=1
+			in_put=in_put.rstrip("\n")
+			print(in_put,"&",type(in_put))
+
 		crypt_csv(in_put)
 
 	return l
