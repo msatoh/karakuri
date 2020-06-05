@@ -143,8 +143,8 @@ root=tkinter.Tk()
 root.title("karakuri")
 root.geometry("600x400")
 
-label = tkinter.Label(root, text="からくり(仮)", font=("",20))
-label.grid(row=0, padx=5, pady=50)
+d_title = tkinter.Label(root, text="からくり箱風パズル", font=("",20))
+d_title.grid(row=1, padx=150, pady=40,sticky=tkinter.W +tkinter.S)
 
 # 画像を指定                                                                    
 img = Image.open('src/pose_puzzle_kumiawaseru.png')
@@ -152,25 +152,25 @@ img = img.resize((100, 100))
 img = ImageTk.PhotoImage(img)
 # canvasサイズ                          
 canv = tkinter.Canvas(width=100, height=100)
-canv.place(x=380, y=10)
+canv.place(x=420, y=10)
 # -------------------------------------                                         
 # キャンバスに画像を表示する                                                    
 canv.create_image(0, 0, image=img, anchor=tkinter.NW)
 
 b_exer_mode=tkinter.Button(text="エクササイズモード")
 b_exer_mode.bind("<Button-1>",select_pic)
-b_exer_mode.grid(row=5, padx=200, pady=10,ipadx=10,sticky=tkinter.W + tkinter.E)
+b_exer_mode.grid(row=5, padx=200, pady=10,ipadx=10,sticky=tkinter.W + tkinter.E+tkinter.S)
 
 b_endl_mode=tkinter.Button(text="エンドレスモード")
 b_endl_mode.bind("<Button-1>",select_pic)
-b_endl_mode.grid(row=6, padx=200, pady=10,ipadx=10,sticky=tkinter.W + tkinter.E)
+b_endl_mode.grid(row=6, padx=200, pady=10,ipadx=10,sticky=tkinter.W + tkinter.E+tkinter.S)
 
 b_rank=tkinter.Button(text="ランキング")
 b_rank.bind("<Button-1>",disp_ranking)
-b_rank.grid(row=7, padx=200, pady=30,ipadx=10,sticky=tkinter.W + tkinter.E)
+b_rank.grid(row=7, padx=200, pady=20,ipadx=10,sticky=tkinter.W + tkinter.E+tkinter.S)
 
 b_help=tkinter.Button(text="操作方法")
 b_help.bind("<Button-1>",helper)
-b_help.grid(row=8, padx=200, pady=0,ipadx=10,sticky=tkinter.W + tkinter.E)
+b_help.grid(row=8, padx=200, pady=10,ipadx=10,sticky=tkinter.W + tkinter.E+tkinter.S)
 
 root.mainloop()
