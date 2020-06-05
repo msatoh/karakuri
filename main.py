@@ -64,7 +64,7 @@ def f_result(sc):
 	# ラベル
 	scr = tkinter.Label(text="あなたのスコアは"+str(sc)+"です！",font=("",20))
 	scr.place(x=10, y=40)
-	enter_name = tkinter.Label(text="entry youe name:")
+	enter_name = tkinter.Label(text="entry your name:")
 	enter_name.place(x=10, y=80)
 	t_name = tkinter.Entry(width=15)
 	t_name.place(x=150, y=80)

@@ -26,7 +26,6 @@ def fileoc(name,score):
 	cip_t=cip()
 	reader=cip_t.dec_csv()
 	reader=reader.decode()
-	#print("reader",reader)
 	if not(reader==""):
 		#print("initial")
 		l=reader.split("\n")
@@ -37,7 +36,6 @@ def fileoc(name,score):
 	else:
 	 	l=[]
 
-	#print("l: ",l,type(l))
 	pos=0#初期化
 
 	if not(score=="-1"):#-1:ランキング表示時。-1以外:スコア書き込み
@@ -49,7 +47,6 @@ def fileoc(name,score):
 
 		l.insert(pos,[name,score])
 		l=l[0:9]
-		#print("l",l)
 
 		with io.StringIO() as f: #l→crypt_csvに文字列として渡す
 			sys.stdout=f
@@ -58,7 +55,6 @@ def fileoc(name,score):
 			in_put=f.getvalue()
 			sys.stdout=sys.__stdout__
 			in_put=in_put.rstrip("\n")
-			#print(in_put,"&",type(in_put))
 
 		cip_t.crypt_csv(in_put)
 

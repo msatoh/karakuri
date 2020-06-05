@@ -5,14 +5,14 @@ import sys,time,cv2,tkinter,pdb
 from tkinter import messagebox
 
 class Game():
-# +---------------------------------------------------------+
-# + __init__                                                |
-# + ...読み込んだ画像の周りを白埋めしたデータを用意する             |
-# +                                                         |
-# + maingame                                                |
-# + ...マウスイベント(class Mouse())をセットする                |
-# +    音楽を再生して__init__で用意した画像を表示し、正解判定を行う。|
-# +---------------------------------------------------------+
+# +---------------------------------------------------------------+
+# | __init__                                                     |
+# | ...読み込んだ画像の周りを白埋めしたデータを用意する              |
+# |                                                               |
+# | maingame                                                     |
+# | ...マウスイベント(class Mouse())をセットする                  |
+# |    音楽を再生して__init__で用意した画像を表示し、正解判定を行う。|
+# +---------------------------------------------------------------+
 
 	def __init__(self,file_name):
 
@@ -31,7 +31,7 @@ class Game():
 				self.white_canvas[i+100][j+100]=img[i][j]
 				self.initial_canvas[i+100][j+100]=img[i][j]
 
-	def maingame(self,mode,lvl): #mode: エクササイズのスコア lvl: レベル初期値
+	def maingame(self,mode,lvl): #mode: エクササイズのスコア.-1はエンドレスモード lvl: レベル初期値
 		self.stat=1 #エンドレスのレベル
 		mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,lvl)
 		cv2.setMouseCallback("gameplay",mouse_t.mouse_event)
@@ -39,18 +39,22 @@ class Game():
 		pygame.mixer.music.load("src/MusMus-BGM-085.mp3")
 		pygame.mixer.music.play(-1)
 
-
+		flag_init=True
 		while(True):
 			cv2.imshow("gameplay",self.white_canvas)
 			if mode>=0:
 				disp=mode
 			else:
 				disp=self.stat
-			cv2.putText(self.white_canvas,"score %d"%disp,(self.canvas_width-140,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),thickness=1,lineType=cv2.LINE_8)
+			if (flag_init):
+				cv2.putText(self.white_canvas,"score %d"%disp,(self.canvas_width-140,50),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),thickness=1,lineType=cv2.LINE_8)
+				flag_init=False
 			if cv2.waitKey(1) & 0xff==ord("q"):#'q'が押されたら終了
+				if mode>=0:
+					self.stat=-1
 				break
 			elif (self.initial_canvas[100:self.canvas_height-100,100:self.canvas_width-100]==self.white_canvas[100:self.canvas_height-100,100:self.canvas_width-100]).all():#元の絵に戻った時
-				if mode>=0:
+				if mode>=0:#エクササイズ
 					omigoto = tkinter.Tk()
 					omigoto.withdraw()
 					pygame.mixer.init()
@@ -61,7 +65,7 @@ class Game():
 						mode+=1
 						self.stat=mode
 						break
-				else:
+				else:#エンドレスモード
 					#レベルの表記を消す
 					for i in range(0,100,1):
 						self.white_canvas[i][self.canvas_width-140:self.canvas_width-1]=(255,255,255)
@@ -69,6 +73,7 @@ class Game():
 					se.play()
 					del mouse_t
 					self.stat+=1
+					flag_init=True
 					mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,self.stat)
 					cv2.setMouseCallback("gameplay",mouse_t.mouse_event)
 
@@ -132,7 +137,7 @@ class Mouse(Game): #基本的にはいじらない。buf_size除く
 			for i in range(1,self.BUF_SIZE,1):
 				for j in range(0,self.BUF_SIZE,1):
 					self.buf[i][j]=self.white_canvas[self.canvas_height-self.BUF_SIZE+i][math.floor((x-1)/self.BUF_SIZE)*self.BUF_SIZE+j-1]
-			for i in range(self.canvas_height-self.BUF_SIZE,1,-1,):
+			for i in range(self.canvas_height-self.BUF_SIZE,0,-1,):
 				for j in range(0,self.BUF_SIZE,1):
 					self.white_canvas[i+self.BUF_SIZE-1][math.floor((x-1)/self.BUF_SIZE)*self.BUF_SIZE+j-1]=self.white_canvas[i-1][math.floor((x-1)/self.BUF_SIZE)*self.BUF_SIZE+j-1]
 			for i in range(1,self.BUF_SIZE,1):
