@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys,tkinter,os,cv2,pygame,random,pdb,csv
 from tkinter import filedialog
-from PIL import Image, ImageTk
+#from PIL import Image, ImageTk
 import puzl,db
 from lib import cv_util
 #from functools import partial --ウィジェット選択時の関数に引数を与える
@@ -147,9 +147,8 @@ d_title = tkinter.Label(root, text="からくり箱風パズル", font=("",20))
 d_title.grid(row=1, padx=150, pady=40,sticky=tkinter.W +tkinter.S)
 
 # 画像を指定                                                                    
-img = Image.open('src/pose_puzzle_kumiawaseru.png')
-img = img.resize((100, 100))
-img = ImageTk.PhotoImage(img)
+img = tkinter.PhotoImage(file='src/pose_puzzle_kumiawaseru.png')
+img = img.subsample(8)
 # canvasサイズ                          
 canv = tkinter.Canvas(width=100, height=100)
 canv.place(x=420, y=10)
