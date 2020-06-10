@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import sys,tkinter,os,cv2,pygame,random,pdb,csv
 from tkinter import filedialog
-#from PIL import Image, ImageTk
+#from PIL import Image, ImageTk --python3でコンパイルすると失敗するため
 import puzl,db
-from lib import cv_util
+#from lib import cv_util
 #from functools import partial --ウィジェット選択時の関数に引数を与える
 
 def helper(event):
@@ -79,6 +79,14 @@ def f_result(sc):
 	w_result.mainloop()
 
 def level_select():
+	
+	def d_lvl_init():
+		global level
+		level=int(txt.get())
+		if level==0:
+			level=999
+		lvl_slct.destroy()
+
 	# Tkクラス生成
 	lvl_slct = tkinter.Tk()
 	lvl_slct.geometry('300x200')
@@ -89,14 +97,7 @@ def level_select():
 	# テキストボックス
 	txt = tkinter.Entry(width=15)
 	txt.place(x=50, y=70)
-
-	def d_lvl_init():
-		global level
-		level=int(txt.get())
-		if level==0:
-			level=999
-		lvl_slct.destroy()
-	#box
+	# button
 	btn=tkinter.Button(text="決定",command=d_lvl_init)
 	btn.place(x=180, y=70)
 
