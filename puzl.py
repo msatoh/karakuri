@@ -1,6 +1,6 @@
 # coding:UTF=8
 
-import numpy,math,random,pygame
+import numpy,math,random,pygame,io
 import sys,time,cv2,tkinter,pdb
 from tkinter import messagebox
 
@@ -86,7 +86,8 @@ class Mouse(Game): #基本的にはいじらない。buf_size除く
 	LEFT  = 2
 	UP    = 3
 	DOWN  = 4
-	BUF_SIZE=50
+	with open("src/conf.txt","rb") as f:
+		BUF_SIZE=int(f.read())
 
 	def __init__(self,canvas_height,canvas_width,white_canvas,shuffle_t):
 		self.x_hold=0

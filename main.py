@@ -2,7 +2,7 @@
 import sys,tkinter,os,cv2,pygame,random,pdb,csv
 from tkinter import filedialog
 #from PIL import Image, ImageTk --python3でコンパイルすると失敗するため
-import puzl,db
+import puzl,db,conf
 #from lib import cv_util
 #from functools import partial --ウィジェット選択時の関数に引数を与える
 
@@ -169,8 +169,12 @@ b_rank=tkinter.Button(text="ランキング")
 b_rank.bind("<Button-1>",disp_ranking)
 b_rank.grid(row=7, padx=200, pady=20,ipadx=10,sticky=tkinter.W + tkinter.E+tkinter.S)
 
+b_rank=tkinter.Button(text="各種設定")
+b_rank.bind("<Button-1>",conf.config)
+b_rank.grid(row=8, padx=200, pady=20,ipadx=10,sticky=tkinter.W + tkinter.E+tkinter.S)
+
 b_help=tkinter.Button(text="操作方法")
 b_help.bind("<Button-1>",helper)
-b_help.grid(row=8, padx=200, pady=10,ipadx=10,sticky=tkinter.W + tkinter.E+tkinter.S)
+b_help.grid(row=9, padx=200, pady=10,ipadx=10,sticky=tkinter.W + tkinter.E+tkinter.S)
 
 root.mainloop()
