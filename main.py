@@ -171,7 +171,7 @@ b_rank.grid(row=7, padx=200, pady=20,ipadx=10,sticky=tkinter.W + tkinter.E+tkint
 
 b_rank=tkinter.Button(text="各種設定")
 b_rank.bind("<Button-1>",conf.config)
-b_rank.grid(row=8, padx=200, pady=20,ipadx=10,sticky=tkinter.W + tkinter.E+tkinter.S)
+b_rank.grid(row=8, padx=200, pady=10,ipadx=10,sticky=tkinter.W + tkinter.E+tkinter.S)
 
 b_help=tkinter.Button(text="操作方法")
 b_help.bind("<Button-1>",helper)
