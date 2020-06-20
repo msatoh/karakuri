@@ -7,7 +7,7 @@ import puzl,db,conf
 #from functools import partial --ウィジェット選択時の関数に引数を与える
 
 def helper(event):
-	cap = cv2.VideoCapture("src/mihon.mp4")
+	cap = cv2.VideoCapture("./src/mihon.mp4")
 	if not cap.isOpened():
 		sys.exit()
 	while True:
@@ -30,13 +30,13 @@ def disp_ranking(event):
 	def end_end():
 		d_rank.destroy()
 		pygame.mixer.music.stop()
-		pygame.mixer.music.load("src/MusMus-BGM-093.mp3")
+		pygame.mixer.music.load("./src/MusMus-BGM-093.mp3")
 		pygame.mixer.music.play(-1)
 
 	d_rank=tkinter.Tk()
 	d_rank.geometry("400x300")
 	d_rank.title("ランキング")
-	pygame.mixer.music.load("src/MusMus-BGM-019.mp3")
+	pygame.mixer.music.load("./src/MusMus-BGM-019.mp3")
 	pygame.mixer.music.play(-1)
 
 	disp_r=[[]*2]*5
@@ -56,7 +56,7 @@ def disp_ranking(event):
 
 def f_result(sc):
 	pygame.mixer.music.stop()
-	fanfare=pygame.mixer.Sound("src/ファンファーレ4.wav")
+	fanfare=pygame.mixer.Sound("./src/ファンファーレ4.wav")
 	fanfare.play()
 	w_result = tkinter.Tk()
 	w_result.geometry('400x300')
@@ -137,7 +137,12 @@ def select_pic(event):
 ##main##
 
 pygame.mixer.init()
-pygame.mixer.music.load("src/MusMus-BGM-093.mp3")
+if os.name=="posix":
+	pygame.mixer.music.load("src/MusMus-BGM-093.mp3")
+elif os.name=="nt":
+	srcpath=os.path.join(os.getcwd(),"src\\"+"MusMus-BGM-093.mp3")
+	pygame.mixer.music.load(srcpath)
+
 pygame.mixer.music.play(-1)
 
 root=tkinter.Tk()
@@ -148,7 +153,7 @@ d_title = tkinter.Label(root, text="からくり箱風パズル", font=("",20))
 d_title.grid(row=1, padx=150, pady=40,sticky=tkinter.W +tkinter.S)
 
 # 画像を指定                                                                    
-img = tkinter.PhotoImage(file='src/pose_puzzle_kumiawaseru.png')
+img = tkinter.PhotoImage(file='./src/pose_puzzle_kumiawaseru.png')
 img = img.subsample(8)
 # canvasサイズ                          
 canv = tkinter.Canvas(width=100, height=100)

@@ -36,7 +36,7 @@ class Game():
 		mouse_t=Mouse(self.canvas_height,self.canvas_width,self.white_canvas,lvl)
 		cv2.setMouseCallback("gameplay",mouse_t.mouse_event)
 
-		pygame.mixer.music.load("src/MusMus-BGM-085.mp3")
+		pygame.mixer.music.load("./src/MusMus-BGM-085.mp3")
 		pygame.mixer.music.play(-1)
 
 		flag_init=True
@@ -58,7 +58,7 @@ class Game():
 					omigoto = tkinter.Tk()
 					omigoto.withdraw()
 					pygame.mixer.init()
-					pygame.mixer.music.load("src/btn15.mp3")
+					pygame.mixer.music.load("./src/btn15.mp3")
 					pygame.mixer.music.play(0)
 					if messagebox.showinfo("正解","おみごと")=="ok":
 						omigoto.destroy()
@@ -69,7 +69,7 @@ class Game():
 					#レベルの表記を消す
 					for i in range(0,100,1):
 						self.white_canvas[i][self.canvas_width-140:self.canvas_width-1]=(255,255,255)
-					se=pygame.mixer.Sound("src/btn07.wav")
+					se=pygame.mixer.Sound("./src/btn07.wav")
 					se.play()
 					del mouse_t
 					self.stat+=1
@@ -86,7 +86,7 @@ class Mouse(Game): #基本的にはいじらない。buf_size除く
 	LEFT  = 2
 	UP    = 3
 	DOWN  = 4
-	with open("src/conf.txt","r") as f:
+	with open("./src/conf.txt","r") as f:
 		BUF_SIZE=int(f.read())
 
 	def __init__(self,canvas_height,canvas_width,white_canvas,shuffle_t):

@@ -10,11 +10,11 @@ class cip():
 		self.data=list.encode()
 		self.fernet=Fernet(self.key)
 		self.encrypted=self.fernet.encrypt(self.data)
-		with open("src/rank.csv","wb") as f:
+		with open("./src/rank.csv","wb") as f:
 			f.write(self.encrypted)
 
 	def dec_csv(self):
-		with open("src/rank.csv","rb") as f:
+		with open("./src/rank.csv","rb") as f:
 			self.data=f.read()
 			if self.data==b"":
 				return self.data

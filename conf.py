@@ -4,7 +4,7 @@ from tkinter import filedialog
 def config(event):
 
 	def end_e():
-		with open("src/conf.txt","w") as f:
+		with open("./src/conf.txt","w") as f:
 			f.write(txt_conf.get())
 			d_conf.destroy()
    	
@@ -12,7 +12,7 @@ def config(event):
 	d_conf.geometry("400x300")
 	d_conf.title("設定")
 
-	with open("src/conf.txt","r") as f:
+	with open("./src/conf.txt","r") as f:
 		buf_size_config=f.read()
   
   	# ラベル
